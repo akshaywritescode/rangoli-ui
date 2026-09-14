@@ -7,6 +7,7 @@ interface EventTicketProps {
   holderRole: string;
   ticketId: string;
   eventLogo?: string;
+  scale?: number; // Scale multiplier (1 = default, 1.5 = 150%, 0.75 = 75%, etc.)
 }
 
 export default function EventTicket({
@@ -16,9 +17,13 @@ export default function EventTicket({
   holderRole,
   ticketId,
   eventLogo,
+  scale = 1,
 }: EventTicketProps) {
   return (
-    <div className="relative w-full max-w-3xl">
+    <div 
+      className="relative w-full max-w-3xl"
+      style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
+    >
       {/* Ticket Container */}
       <div className="relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl border border-white/10 overflow-hidden">
         <div className="flex relative">

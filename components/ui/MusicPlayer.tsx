@@ -7,9 +7,16 @@ interface MusicPlayerProps {
   audioSrc: string;
   songName?: string;
   artistName?: string;
+  scale?: number; // Scale multiplier (1 = default, 1.5 = 150%, 0.75 = 75%, etc.)
 }
 
-export default function MusicPlayer({ coverImage, audioSrc, songName, artistName }: MusicPlayerProps) {
+export default function MusicPlayer({ 
+  coverImage, 
+  audioSrc, 
+  songName, 
+  artistName,
+  scale = 1 
+}: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDiskOut, setIsDiskOut] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -29,7 +36,10 @@ export default function MusicPlayer({ coverImage, audioSrc, songName, artistName
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div 
+      className="flex flex-col items-center justify-center gap-4"
+      style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
+    >
       <audio ref={audioRef} src={audioSrc} />
       
       <div

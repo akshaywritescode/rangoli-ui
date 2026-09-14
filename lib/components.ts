@@ -30,6 +30,7 @@ interface EventTicketProps {
   holderRole: string;
   ticketId: string;
   eventLogo?: string;
+  scale?: number;
 }
 
 export default function EventTicket({
@@ -39,9 +40,10 @@ export default function EventTicket({
   holderRole,
   ticketId,
   eventLogo,
+  scale = 1,
 }: EventTicketProps) {
   return (
-    <div className="relative w-full max-w-3xl">
+    <div className="relative w-full max-w-3xl" style={{ transform: \`scale(\${scale})\`, transformOrigin: 'center' }}>
       <div className="relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl overflow-hidden border border-white/10">
         <div className="flex">
           <div className="flex-1 p-8 relative z-10">
@@ -160,6 +162,7 @@ export default function MyPage() {
 - \`holderRole\` (string, required): Role or ticket type description
 - \`ticketId\` (string, required): Unique ticket identifier
 - \`eventLogo\` (string, optional): URL to event logo image
+- \`scale\` (number, optional): Scale multiplier for component size (default: 1, use 1.5 for 150%, 0.75 for 75%, etc.)
 
 ### Features
 
@@ -322,7 +325,7 @@ export default function MyPage() {
 ### Props
 
 - \`data\` (string, required): The data to encode in the QR code (URL, text, etc.)
-- \`size\` (number, optional): Size of QR code in pixels (default: 300)
+- \`size\` (number, optional): Size of QR code in pixels (default: 300) - controls the actual QR code dimensions
 - \`animationDuration\` (number, optional): Duration in seconds for dots to form (default: 0.8)
 - \`dotColor\` (string, optional): Color of the QR dots in hex format (default: "#000000")
 
@@ -355,9 +358,10 @@ interface MusicPlayerProps {
   audioSrc: string;
   songName?: string;
   artistName?: string;
+  scale?: number;
 }
 
-export default function MusicPlayer({ coverImage, audioSrc, songName, artistName }: MusicPlayerProps) {
+export default function MusicPlayer({ coverImage, audioSrc, songName, artistName, scale = 1 }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDiskOut, setIsDiskOut] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -377,7 +381,7 @@ export default function MusicPlayer({ coverImage, audioSrc, songName, artistName
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4" style={{ transform: \`scale(\${scale})\`, transformOrigin: 'center' }}>
       <audio ref={audioRef} src={audioSrc} />
       
       <div
@@ -509,6 +513,7 @@ export default function MyPage() {
 - \`audioSrc\` (string, required): URL or path to the audio file (mp3, wav, etc.)
 - \`songName\` (string, optional): Name of the song to display below the player
 - \`artistName\` (string, optional): Name of the artist to display below the player
+- \`scale\` (number, optional): Scale multiplier for component size (default: 1, use 1.5 for 150%, 0.75 for 75%, etc.)
 
 ### Features
 
@@ -516,6 +521,7 @@ export default function MyPage() {
 - Animated disk that slides out and rotates
 - Smooth transitions and animations
 - Customizable cover image and audio source
-- Optional song and artist name display`,
+- Optional song and artist name display
+- Adjustable size with scale prop`,
   },
 ];
