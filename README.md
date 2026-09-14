@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rangoli 🎨
+
+A beautiful, modern UI component library built with Next.js, TypeScript, and Tailwind CSS. Featuring a stunning animated geometric logo, premium typography, smooth animations, and a sleek dark interface.
+
+## ✨ Features
+
+- 🎨 **Animated Rangoli Logo**: Custom multicolor geometric design with rotating layers
+- 🔍 **Smart Search**: Command palette style search with `⌘K` shortcut
+- 🔤 **Beautiful Typography**: Space Grotesk, Inter, and JetBrains Mono fonts
+- 🌈 **Vibrant Colors**: Full spectrum gradient accents
+- ⚡ **Built with Next.js 15**: App Router, TypeScript, and Tailwind CSS v4
+- 📱 **Fully Responsive**: Perfect on all devices
+- 🔍 **Three View Modes**: Preview, Code, and Usage documentation
+- 📋 **Copy-to-Clipboard**: One-click code copying
+- 🚀 **Static Generation**: Lightning-fast performance
+- 📝 **Markdown Support**: Rich documentation support
+- 🎭 **Smooth Animations**: Polished micro-interactions
+- 💎 **Glass Morphism**: Modern backdrop blur effects
+- ⌨️ **Keyboard Shortcuts**: Quick access to search and navigation
 
 ## Getting Started
 
@@ -6,31 +24,143 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+rangoli/
+├── app/
+│   ├── component/[id]/
+│   │   └── page.tsx          # Dynamic component detail pages
+│   ├── globals.css            # Global styles
+│   ├── layout.tsx             # Root layout
+│   └── page.tsx               # Homepage
+├── components/
+│   ├── CodeBlock.tsx          # Code display with copy button
+│   ├── ComponentCard.tsx      # Component card for homepage
+│   ├── ComponentPreview.tsx   # Live component preview
+│   └── ComponentTabs.tsx      # Tab navigation for detail page
+├── lib/
+│   └── components.ts          # Component data store
+└── public/                    # Static assets
+```
 
-## Learn More
+## Adding New Components
 
-To learn more about Next.js, take a look at the following resources:
+To add a new component, follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. Add Component Data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Edit `lib/components.ts` and add a new object to the `components` array:
 
-## Deploy on Vercel
+```typescript
+{
+  id: "your-component-id",
+  name: "Component Name",
+  description: "Brief description of the component",
+  category: "Category", // e.g., 'Buttons', 'Cards', 'Forms'
+  date: "2026-09-14",   // Release date in YYYY-MM-DD format
+  html: `<div class="your-component">
+    <!-- Your HTML -->
+  </div>`,
+  css: `.your-component {
+    /* Your CSS */
+  }`,
+  js: `// Optional JavaScript
+  console.log('Hello');`,
+  usage: `## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Your markdown documentation here.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Installation
+1. Copy the code
+2. Paste it in your project
+
+### Tips
+- Tip 1
+- Tip 2
+  `
+}
+```
+
+### 2. Add Component Preview
+
+Edit `components/ComponentPreview.tsx` and add a new case for your component:
+
+```typescript
+if (component.id === "your-component-id") {
+  return (
+    <>
+      <style jsx>{`
+        /* Your component styles */
+      `}</style>
+      <div className="your-component">
+        {/* Your component JSX */}
+      </div>
+    </>
+  );
+}
+```
+
+### 3. Test
+
+Run the dev server and navigate to:
+- Homepage: `http://localhost:3000` - Your component should appear in the grid
+- Detail page: `http://localhost:3000/component/your-component-id`
+
+## Customization
+
+### Logo
+
+The Rangoli logo is a custom animated SVG component. See `LOGO_DESIGN.md` for details on:
+- Design philosophy and structure
+- Color customization
+- Animation speed adjustment
+- Creating static versions
+
+### Theme Colors
+
+Edit `app/globals.css` to customize the color scheme:
+
+```css
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+```
+
+### Tailwind Config
+
+The project uses Tailwind CSS v4. Customize colors and other settings in `app/globals.css` using the `@theme` directive.
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+This will generate static pages for all components.
+
+## Deploy
+
+Deploy to Vercel (recommended):
+
+```bash
+vercel
+```
+
+Or any other Next.js-compatible hosting platform.
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS v4
+- **Language**: TypeScript
+- **Markdown**: react-markdown
+
+## License
+
+MIT - Free to use for personal and commercial projects.
