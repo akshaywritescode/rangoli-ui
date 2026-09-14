@@ -14,7 +14,7 @@ export default function ComponentCard({ component }: ComponentCardProps) {
     >
       <div className="relative bg-zinc-950/50 backdrop-blur-sm border border-white/10 rounded-2xl p-4 transition-all duration-300 group-hover:-translate-y-1">
         {/* Preview */}
-        <div className="bg-zinc-900/80 rounded-xl p-10 mb-4 min-h-[280px] flex items-center justify-center border border-white/5">
+        <div className="bg-zinc-900/80 rounded-xl p-10 mb-4 h-[280px] flex items-center justify-center border border-white/5">
           <ComponentPreview component={component} />
         </div>
 
