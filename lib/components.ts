@@ -14,6 +14,183 @@ export interface Component {
 
 export const components: Component[] = [
   {
+    id: "animated-qr-code",
+    name: "Animated QR Code",
+    description: "QR code that comes to life with animated dots",
+    category: "Effects",
+    date: "2026-09-14",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/AnimatedQRCode",
+    html: `"use client";
+
+import { useState, useEffect, useRef } from "react";
+
+interface AnimatedQRCodeProps {
+  data: string;
+  size?: number;
+  animationDuration?: number;
+  dotColor?: string;
+}
+
+export default function AnimatedQRCode({ 
+  data, 
+  size = 300,
+  animationDuration = 0.8,
+  dotColor = "#000000"
+}: AnimatedQRCodeProps) {
+  const [qrData, setQrData] = useState<string>("");
+  const [dots, setDots] = useState<{ x: number; y: number; delay: number; active: boolean }[]>([]);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const qrUrl = \`https://api.qrserver.com/v1/create-qr-code/?size=\${size}x\${size}&data=\${encodeURIComponent(data)}&format=png\`;
+    setQrData(qrUrl);
+  }, [data, size]);
+
+  useEffect(() => {
+    if (!qrData || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = qrData;
+
+    img.onload = () => {
+      canvas.width = size;
+      canvas.height = size;
+      ctx.drawImage(img, 0, 0, size, size);
+
+      const imageData = ctx.getImageData(0, 0, size, size);
+      const moduleSize = size / 33;
+      const newDots: { x: number; y: number; delay: number; active: boolean }[] = [];
+
+      for (let row = 0; row < 33; row++) {
+        for (let col = 0; col < 33; col++) {
+          const x = Math.floor(col * moduleSize + moduleSize / 2);
+          const y = Math.floor(row * moduleSize + moduleSize / 2);
+          const index = (y * size + x) * 4;
+          const r = imageData.data[index];
+          const g = imageData.data[index + 1];
+          const b = imageData.data[index + 2];
+          
+          if (r < 128 && g < 128 && b < 128) {
+            newDots.push({
+              x: col * moduleSize + moduleSize / 2,
+              y: row * moduleSize + moduleSize / 2,
+              delay: Math.random() * animationDuration,
+              active: false,
+            });
+          }
+        }
+      }
+
+      setDots(newDots);
+
+      setTimeout(() => {
+        setDots(prev => prev.map(dot => ({ ...dot, active: true })));
+      }, 100);
+    };
+  }, [qrData, size, animationDuration]);
+
+  return (
+    <div className="relative inline-block">
+      <canvas ref={canvasRef} className="hidden" />
+      
+      <div 
+        className="relative bg-white rounded-2xl p-4"
+        style={{ width: size + 32, height: size + 32 }}
+      >
+        <div className="relative" style={{ width: size, height: size }}>
+          <svg width={size} height={size} className="absolute inset-0">
+            {dots.map((dot, i) => {
+              const moduleSize = size / 33;
+              return (
+                <rect
+                  key={i}
+                  x={dot.x - moduleSize / 2}
+                  y={dot.y - moduleSize / 2}
+                  width={moduleSize}
+                  height={moduleSize}
+                  className="transition-all duration-500 ease-out"
+                  style={{
+                    transitionDelay: \\\`\\\${dot.delay}s\\\`,
+                    opacity: dot.active ? 1 : 0,
+                    transform: dot.active ? 'scale(1)' : 'scale(0)',
+                    transformOrigin: \\\`\\\${dot.x}px \\\${dot.y}px\\\`,
+                  }}
+                  fill={dotColor}
+                />
+              );
+            })}
+          </svg>
+        </div>
+      </div>
+
+      <style jsx>{\\\`
+        @keyframes fadeInScale {
+          from {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+          }
+          to {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+          }
+        }
+      \\\`}</style>
+    </div>
+  );
+}`,
+    css: `// All styles are built into the component using Tailwind CSS
+// Animation keyframes are included inline`,
+    usage: `## Usage
+
+An animated QR code that comes to life with dots animating in. Optional logo in the center.
+
+### Installation
+
+1. Copy the component code to your project: \`components/ui/AnimatedQRCode.tsx\`
+
+### Usage Example
+
+\`\`\`tsx
+import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
+
+export default function MyPage() {
+  return (
+    <AnimatedQRCode 
+      data="https://yourwebsite.com" 
+      size={300}
+      animationDuration={1.5}
+      dotColor="#000000"
+    />
+  );
+}
+\`\`\`
+
+### Props
+
+- \`data\` (string, required): The data to encode in the QR code (URL, text, etc.)
+- \`size\` (number, optional): Size of QR code in pixels (default: 300)
+- \`animationDuration\` (number, optional): Duration in seconds for dots to form (default: 0.8)
+- \`dotColor\` (string, optional): Color of the QR dots in hex format (default: "#000000")
+
+### Features
+
+- Animated dots that scale and fade in with staggered delays
+- Uses QR Server API to generate QR codes
+- Optional logo overlay in center
+- Fully customizable size
+- Smooth animations with React
+
+### API Used
+
+This component uses the free QR Server API: https://goqr.me/api/`,
+  },
+  {
     id: "music-player",
     name: "Music Player",
     description: "Instagram-style animated music player with rotating disk effect",

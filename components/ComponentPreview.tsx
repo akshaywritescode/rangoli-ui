@@ -2,12 +2,25 @@
 
 import { Component } from "@/lib/components";
 import MusicPlayer from "@/components/ui/MusicPlayer";
+import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
 
 interface ComponentPreviewProps {
   component: Component;
 }
 
 export function ComponentPreview({ component }: ComponentPreviewProps) {
+  if (component.id === "animated-qr-code") {
+    return (
+      <div className="scale-50">
+        <AnimatedQRCode 
+          data="https://github.com/rangoli-ui/rangoli"
+          size={200}
+          animationDuration={1.2}
+        />
+      </div>
+    );
+  }
+
   if (component.id === "music-player") {
     return (
       <div className="scale-75">
