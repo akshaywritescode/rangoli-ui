@@ -89,22 +89,22 @@ export default function AnimatedQRCode({
         <div className="relative" style={{ width: size, height: size }}>
           {/* Animated dots */}
           <svg width={size} height={size} className="absolute inset-0">
-            {dots.map((dot, i) => {
+            {dots.map((dotItem, i) => {
               const moduleSize = size / 33;
               return (
                 <rect
                   key={i}
-                  x={dot.x - moduleSize / 2}
-                  y={dot.y - moduleSize / 2}
+                  x={dotItem.x - moduleSize / 2}
+                  y={dotItem.y - moduleSize / 2}
                   width={moduleSize}
                   height={moduleSize}
                   style={{
                     transitionProperty: 'opacity, transform',
                     transitionDuration: '500ms',
                     transitionTimingFunction: 'ease-out',
-                    transitionDelay: `${dot.delay}s`,
-                    opacity: dot.active ? 1 : 0,
-                    transform: dot.active ? 'scale(1)' : 'scale(0)',
+                    transitionDelay: `${dotItem.delay}s`,
+                    opacity: dotItem.active ? 1 : 0,
+                    transform: dotItem.active ? 'scale(1)' : 'scale(0)',
                     transformOrigin: 'center',
                   }}
                   fill={dotColor}
