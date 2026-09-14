@@ -69,11 +69,11 @@ export default function EventTicket({
             </div>
           </div>
 
-          <div className="relative w-0">
+          <div className="relative w-0 h-full">
             {/* Dashed line */}
-            <div className="absolute top-0 bottom-0 left-0 border-l border-dashed border-white/20"></div>
+            <div className="absolute top-0 bottom-0 left-0 border-l border-dashed border-white/20 h-full"></div>
             {/* Semi-circles cutting through - only show left half */}
-            <div className="absolute top-0 bottom-0 left-0 w-2 flex flex-col justify-evenly overflow-hidden">
+            <div className="absolute top-0 bottom-0 left-0 w-2 h-full flex flex-col justify-evenly overflow-hidden">
               {Array.from({ length: 20 }).map((_, i) => (
                 <div key={i} className="w-4 h-2 rounded-full bg-black -ml-2" />
               ))}
@@ -136,11 +136,11 @@ import EventTicket from "@/components/ui/EventTicket";
 export default function MyPage() {
   return (
     <EventTicket
-      eventName="INIT Conference"
-      eventDate="August 31 - September 4"
-      holderName="John Doe"
-      holderRole="Appwrite developer"
-      ticketId="INIT-7440B2"
+      eventName="Apple Conference"
+      eventDate="September 15 - September 20"
+      holderName="Akshay"
+      holderRole="Software Engineer"
+      ticketId="APPLE-2024"
       eventLogo="/event-logo.png"
     />
   );

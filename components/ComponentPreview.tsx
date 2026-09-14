@@ -14,11 +14,11 @@ export function ComponentPreview({ component }: ComponentPreviewProps) {
     return (
       <div className="scale-[0.35] origin-center">
         <EventTicket
-          eventName="INIT Conference"
-          eventDate="August 31 - September 4"
-          holderName="Testing11"
-          holderRole="Appwrite developer"
-          ticketId="INIT-7440B2"
+          eventName="Apple Conference"
+          eventDate="September 15 - September 20"
+          holderName="Akshay"
+          holderRole="Software Engineer"
+          ticketId="APPLE-2024"
         />
       </div>
     );

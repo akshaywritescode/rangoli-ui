@@ -112,11 +112,11 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
 />`
   : component.id === 'event-ticket'
   ? `<EventTicket
-  eventName="INIT Conference"
-  eventDate="August 31 - September 4"
-  holderName="John Doe"
-  holderRole="Appwrite developer"
-  ticketId="INIT-7440B2"
+  eventName="Apple Conference"
+  eventDate="September 15 - September 20"
+  holderName="Akshay"
+  holderRole="Software Engineer"
+  ticketId="APPLE-2024"
   eventLogo="/event-logo.png"
 />`
   : `<MusicPlayer 

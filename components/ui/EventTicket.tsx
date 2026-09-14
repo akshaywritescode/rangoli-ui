@@ -55,11 +55,11 @@ export default function EventTicket({
           </div>
 
           {/* Perforated Divider with Semi-circles */}
-          <div className="relative w-0">
+          <div className="relative w-0 h-full">
             {/* Dashed line */}
-            <div className="absolute top-0 bottom-0 left-0 border-l border-dashed border-white/20"></div>
+            <div className="absolute top-0 bottom-0 left-0 border-l border-dashed border-white/20 h-full"></div>
             {/* Semi-circles cutting through - only show left half */}
-            <div className="absolute top-0 bottom-0 left-0 w-2 flex flex-col justify-evenly overflow-hidden">
+            <div className="absolute top-0 bottom-0 left-0 w-2 h-full flex flex-col justify-evenly overflow-hidden">
               {Array.from({ length: 20 }).map((_, i) => (
                 <div
                   key={i}
