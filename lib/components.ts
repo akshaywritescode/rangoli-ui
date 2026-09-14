@@ -278,7 +278,7 @@ export default function AnimatedQRCode({
                     transitionDelay: \\\`\\\${dot.delay}s\\\`,
                     opacity: dot.active ? 1 : 0,
                     transform: dot.active ? 'scale(1)' : 'scale(0)',
-                    transformOrigin: \\\`\\\${dot.x}px \\\${dot.y}px\\\`,
+                    transformOrigin: 'center',
                   }}
                   fill={dotColor}
                 />
