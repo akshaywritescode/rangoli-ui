@@ -1,0 +1,16 @@
+<svg width="64" height="64" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Center circle -->
+  <circle cx="90" cy="90" r="15" fill="#ec4899"/>
+  
+  <!-- Inner petals (8 petals) -->
+  <g>
+    <ellipse cx="90" cy="60" rx="12" ry="25" fill="#d946ef"/>
+    <ellipse cx="117" cy="73" rx="12" ry="25" fill="#c026d3" transform="rotate(45 117 73)"/>
+    <ellipse cx="130" cy="90" rx="12" ry="25" fill="#a855f7" transform="rotate(90 130 90)"/>
+    <ellipse cx="117" cy="107" rx="12" ry="25" fill="#8b5cf6" transform="rotate(135 117 107)"/>
+    <ellipse cx="90" cy="120" rx="12" ry="25" fill="#7c3aed" transform="rotate(180 90 120)"/>
+    <ellipse cx="73" cy="107" rx="12" ry="25" fill="#6366f1" transform="rotate(225 73 107)"/>
+    <ellipse cx="50" cy="90" rx="12" ry="25" fill="#6366f1" transform="rotate(270 50 90)"/>
+    <ellipse cx="73" cy="73" rx="12" ry="25" fill="#8b5cf6" transform="rotate(315 73 73)"/>
+  </g>
+</svg>
