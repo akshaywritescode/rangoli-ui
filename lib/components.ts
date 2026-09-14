@@ -69,13 +69,13 @@ export default function EventTicket({
             </div>
           </div>
 
-          <div className="relative w-0 h-full">
+          <div className="relative w-0">
             {/* Dashed line */}
-            <div className="absolute top-0 bottom-0 left-0 border-l border-dashed border-white/20 h-full"></div>
-            {/* Semi-circles cutting through - only show left half */}
-            <div className="absolute top-0 bottom-0 left-0 w-2 h-full flex flex-col justify-evenly overflow-hidden">
+            <div className="absolute inset-y-0 left-0 w-px border-l border-dashed border-white/30"></div>
+            {/* Semi-circles cutting through */}
+            <div className="absolute inset-y-0 -left-1 w-2 flex flex-col justify-evenly">
               {Array.from({ length: 20 }).map((_, i) => (
-                <div key={i} className="w-4 h-2 rounded-full bg-black -ml-2" />
+                <div key={i} className="w-2 h-2 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900" />
               ))}
             </div>
           </div>
