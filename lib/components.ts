@@ -69,23 +69,23 @@ export default function EventTicket({
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative z-20">
             {/* Vertical dashed line */}
             <div 
               className="absolute top-0 bottom-0 left-0 w-px" 
               style={{
-                backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.3) 0px, rgba(255,255,255,0.3) 8px, transparent 8px, transparent 16px)'
+                backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.5) 0px, rgba(255,255,255,0.5) 6px, transparent 6px, transparent 12px)'
               }}
             ></div>
             {/* Semi-circles */}
             <div className="absolute inset-y-0 left-0 flex flex-col justify-evenly -translate-x-1/2">
               {Array.from({ length: 18 }).map((_, i) => (
-                <div key={i} className="w-3 h-3 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border border-white/10" />
+                <div key={i} className="w-3 h-3 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border border-white/20" />
               ))}
             </div>
           </div>
 
-          <div className="w-64 relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 p-8">
+          <div className="w-64 relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 p-8 z-10">
             <div className="relative z-10 h-full flex flex-col items-center justify-between">
               <div className="text-center">
                 <span className="text-zinc-500 text-xs uppercase tracking-widest">{eventDate}</span>
