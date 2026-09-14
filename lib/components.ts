@@ -79,8 +79,8 @@ export default function EventTicket({
             ></div>
             {/* Semi-circles */}
             <div className="absolute inset-y-0 left-0 flex flex-col justify-evenly -translate-x-1/2">
-              {Array.from({ length: 18 }).map((_, i) => (
-                <div key={i} className="w-3 h-3 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border border-white/20" />
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="w-2 h-2 rounded-full bg-black border border-white/10" />
               ))}
             </div>
           </div>
