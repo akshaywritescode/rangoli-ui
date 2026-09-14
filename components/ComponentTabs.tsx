@@ -118,7 +118,6 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   holderRole="Appwrite developer"
   ticketId="INIT-7440B2"
   eventLogo="/event-logo.png"
-  backgroundImage="/event-bg.jpg"
 />`
   : `<MusicPlayer 
   coverImage="/path/to/cover.jpg" 
@@ -136,7 +135,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                       {component.id === 'animated-qr-code' 
                         ? 'No additional assets required - component uses QR Server API'
                         : component.id === 'event-ticket'
-                        ? 'Optional: Add event logo and background images to your public folder'
+                        ? 'Optional: Add event logo to your public folder'
                         : <>Place <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">play-icon.svg</code> and <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">pause-icon.svg</code> in your public folder</>
                       }
                     </p>

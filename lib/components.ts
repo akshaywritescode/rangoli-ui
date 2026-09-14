@@ -30,7 +30,6 @@ interface EventTicketProps {
   holderRole: string;
   ticketId: string;
   eventLogo?: string;
-  backgroundImage?: string;
 }
 
 export default function EventTicket({
@@ -40,7 +39,6 @@ export default function EventTicket({
   holderRole,
   ticketId,
   eventLogo,
-  backgroundImage,
 }: EventTicketProps) {
   return (
     <div className="relative w-full max-w-3xl">
@@ -80,30 +78,28 @@ export default function EventTicket({
             <div className="absolute top-0 bottom-0 left-0 w-px border-l-2 border-dashed border-white/10"></div>
           </div>
 
-          <div className="w-80 relative overflow-hidden">
-            {backgroundImage ? (
-              <img src={backgroundImage} alt="Event visual" className="absolute inset-0 w-full h-full object-cover opacity-30" />
-            ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-600/20 via-purple-600/20 to-pink-600/20"></div>
-            )}
-
-            <div className="absolute inset-0 opacity-20">
+          <div className="w-80 relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
+            <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0" style={{
-                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)',
-                backgroundSize: '32px 32px'
+                backgroundImage: 'radial-gradient(circle, rgba(236,72,153,0.4) 1px, transparent 1px)',
+                backgroundSize: '20px 20px'
               }}></div>
             </div>
 
-            <div className="relative z-10 h-full flex flex-col items-center justify-center p-8">
-              <div className="absolute right-6 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
-                <div className="flex items-center gap-3 whitespace-nowrap">
-                  <span className="text-pink-500 font-mono text-xs font-bold">#{ticketId}</span>
-                  <span className="text-white/90 font-bold text-lg tracking-wider">{holderName}</span>
+            <div className="relative z-10 h-full flex flex-col items-end justify-between p-8">
+              {eventLogo && (
+                <img src={eventLogo} alt="Event Logo" className="h-6 object-contain" />
+              )}
+
+              <div className="absolute right-8 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
+                <div className="flex items-center gap-4 whitespace-nowrap">
+                  <span className="text-pink-500 font-mono text-sm font-bold">#{ticketId}</span>
+                  <span className="text-white font-bold text-2xl tracking-wider font-space-grotesk">{holderName}</span>
                 </div>
               </div>
 
-              <div className="absolute right-6 bottom-8 -rotate-90 origin-bottom-right">
-                <span className="text-white/60 text-xs uppercase tracking-widest">{eventDate}</span>
+              <div className="text-right">
+                <span className="text-zinc-500 text-xs uppercase tracking-widest">{eventDate}</span>
               </div>
             </div>
           </div>
@@ -138,7 +134,6 @@ export default function MyPage() {
       holderRole="Appwrite developer"
       ticketId="INIT-7440B2"
       eventLogo="/event-logo.png"
-      backgroundImage="/event-bg.jpg"
     />
   );
 }
@@ -152,16 +147,16 @@ export default function MyPage() {
 - \`holderRole\` (string, required): Role or ticket type description
 - \`ticketId\` (string, required): Unique ticket identifier
 - \`eventLogo\` (string, optional): URL to event logo image
-- \`backgroundImage\` (string, optional): URL to background image for right side
 
 ### Features
 
 - Modern perforated edge design
-- Gradient background with optional image
+- Matching gradient background on both sides
 - Responsive layout
 - Pink accent colors
 - Vertical text on right side
 - Ticket ID with pink highlight
+- Subtle dot pattern
 - Clean, professional appearance`,
   },
   {
