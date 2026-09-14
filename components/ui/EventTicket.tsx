@@ -117,13 +117,13 @@ export default function EventTicket({
           </div>
         </div>
 
-        {/* Top and Bottom Notches for tear effect */}
+        {/* Top and Bottom Notches for tear effect at center */}
         <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-black border border-white/10"></div>
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-black border border-white/10"></div>
         
-        {/* Left side semi-circles at perforation start/end */}
-        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border border-white/10"></div>
-        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border border-white/10"></div>
+        {/* Semi-circles at perforation line start/end */}
+        <div className="absolute -top-2 left-[calc(100%-16rem)] w-4 h-4 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border border-white/10 z-20"></div>
+        <div className="absolute -bottom-2 left-[calc(100%-16rem)] w-4 h-4 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border border-white/10 z-20"></div>
       </div>
     </div>
   );
