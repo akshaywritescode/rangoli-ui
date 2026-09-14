@@ -118,11 +118,8 @@ export default function EventTicket({
           </div>
         </div>
 
-        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-black border border-white/10"></div>
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-black border border-white/10"></div>
-        
-        <div className="absolute -top-2 left-[calc(100%-16rem)] -translate-x-1/2 w-4 h-4 rounded-full bg-black border-l border-white/10 z-20"></div>
-        <div className="absolute -bottom-2 left-[calc(100%-16rem)] -translate-x-1/2 w-4 h-4 rounded-full bg-black border-l border-white/10 z-20"></div>
+        <div className="absolute -top-2 left-[calc(100%-16rem)] -translate-x-1/2 w-4 h-4 rounded-full bg-black border border-white/10 z-20"></div>
+        <div className="absolute -bottom-2 left-[calc(100%-16rem)] -translate-x-1/2 w-4 h-4 rounded-full bg-black border border-white/10 z-20"></div>
       </div>
     </div>
   );
