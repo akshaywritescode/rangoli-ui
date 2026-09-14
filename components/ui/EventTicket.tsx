@@ -56,17 +56,17 @@ export default function EventTicket({
 
           {/* Perforated Divider with Semi-circles */}
           <div className="relative w-0">
+            {/* Dashed line */}
+            <div className="absolute top-0 bottom-0 left-0 border-l border-dashed border-white/20"></div>
             {/* Semi-circles cutting through */}
-            <div className="absolute top-0 bottom-0 -left-1.5 w-3 flex flex-col justify-around z-20">
-              {Array.from({ length: 14 }).map((_, i) => (
+            <div className="absolute top-0 bottom-0 -left-1 w-2 flex flex-col justify-evenly">
+              {Array.from({ length: 20 }).map((_, i) => (
                 <div
                   key={i}
-                  className="w-3 h-3 rounded-full bg-black"
+                  className="w-2 h-2 rounded-full bg-black"
                 />
               ))}
             </div>
-            {/* Dashed line behind semi-circles */}
-            <div className="absolute top-0 bottom-0 left-0 w-px border-l border-dashed border-white/10 z-10"></div>
           </div>
 
           {/* Right Side - Barcode Style */}
