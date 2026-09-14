@@ -69,13 +69,18 @@ export default function EventTicket({
             </div>
           </div>
 
-          <div className="relative w-0">
-            {/* Dashed line */}
-            <div className="absolute inset-y-0 left-0 w-px border-l border-dashed border-white/30"></div>
-            {/* Semi-circles cutting through */}
-            <div className="absolute inset-y-0 -left-1 w-2 flex flex-col justify-evenly">
-              {Array.from({ length: 20 }).map((_, i) => (
-                <div key={i} className="w-2 h-2 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900" />
+          <div className="relative">
+            {/* Vertical dashed line */}
+            <div 
+              className="absolute top-0 bottom-0 left-0 w-px" 
+              style={{
+                backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.3) 0px, rgba(255,255,255,0.3) 8px, transparent 8px, transparent 16px)'
+              }}
+            ></div>
+            {/* Semi-circles */}
+            <div className="absolute inset-y-0 left-0 flex flex-col justify-evenly -translate-x-1/2">
+              {Array.from({ length: 18 }).map((_, i) => (
+                <div key={i} className="w-3 h-3 rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border border-white/10" />
               ))}
             </div>
           </div>
