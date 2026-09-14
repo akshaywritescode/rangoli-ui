@@ -273,8 +273,10 @@ export default function AnimatedQRCode({
                   y={dot.y - moduleSize / 2}
                   width={moduleSize}
                   height={moduleSize}
-                  className="transition-all duration-500 ease-out"
                   style={{
+                    transitionProperty: 'opacity, transform',
+                    transitionDuration: '500ms',
+                    transitionTimingFunction: 'ease-out',
                     transitionDelay: \\\`\\\${dot.delay}s\\\`,
                     opacity: dot.active ? 1 : 0,
                     transform: dot.active ? 'scale(1)' : 'scale(0)',
@@ -287,19 +289,6 @@ export default function AnimatedQRCode({
           </svg>
         </div>
       </div>
-
-      <style jsx>{\\\`
-        @keyframes fadeInScale {
-          from {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5);
-          }
-          to {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-          }
-        }
-      \\\`}</style>
     </div>
   );
 }`,
