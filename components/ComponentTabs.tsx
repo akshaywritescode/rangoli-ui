@@ -61,7 +61,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                   <div>
                     <h3 className="text-lg font-semibold mb-2 text-white">Create the component file</h3>
                     <p className="text-zinc-400">
-                      Copy the code from the Code tab and save it as <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">components/ui/MusicPlayer.tsx</code>
+                      Copy the code from the Code tab and save it as <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">{component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : 'components/ui/MusicPlayer.tsx'}</code>
                     </p>
                   </div>
 
@@ -78,7 +78,10 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                           fontSize: '0.875rem',
                         }}
                       >
-                        {`import MusicPlayer from "@/components/ui/MusicPlayer";`}
+                        {component.id === 'animated-qr-code' 
+                          ? `import AnimatedQRCode from "@/components/ui/AnimatedQRCode";`
+                          : `import MusicPlayer from "@/components/ui/MusicPlayer";`
+                        }
                       </SyntaxHighlighter>
                     </div>
                   </div>
@@ -96,7 +99,14 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                           fontSize: '0.875rem',
                         }}
                       >
-{`<MusicPlayer 
+{component.id === 'animated-qr-code' 
+  ? `<AnimatedQRCode 
+  data="https://yourwebsite.com" 
+  size={300}
+  animationDuration={1.5}
+  dotColor="#000000"
+/>`
+  : `<MusicPlayer 
   coverImage="/path/to/cover.jpg" 
   audioSrc="/path/to/audio.mp3"
   songName="Song Title"
@@ -109,7 +119,10 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                   <div>
                     <h3 className="text-lg font-semibold mb-2 text-white">Add required assets</h3>
                     <p className="text-zinc-400">
-                      Place <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">play-icon.svg</code> and <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">pause-icon.svg</code> in your public folder
+                      {component.id === 'animated-qr-code' 
+                        ? 'No additional assets required - component uses QR Server API'
+                        : <>Place <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">play-icon.svg</code> and <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">pause-icon.svg</code> in your public folder</>
+                      }
                     </p>
                   </div>
                 </div>
