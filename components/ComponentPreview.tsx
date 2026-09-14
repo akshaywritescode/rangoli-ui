@@ -3,12 +3,27 @@
 import { Component } from "@/lib/components";
 import MusicPlayer from "@/components/ui/MusicPlayer";
 import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
+import EventTicket from "@/components/ui/EventTicket";
 
 interface ComponentPreviewProps {
   component: Component;
 }
 
 export function ComponentPreview({ component }: ComponentPreviewProps) {
+  if (component.id === "event-ticket") {
+    return (
+      <div className="scale-[0.35] origin-center">
+        <EventTicket
+          eventName="INIT Conference"
+          eventDate="August 31 - September 4"
+          holderName="Testing11"
+          holderRole="Appwrite developer"
+          ticketId="INIT-7440B2"
+        />
+      </div>
+    );
+  }
+
   if (component.id === "animated-qr-code") {
     return (
       <div className="scale-50">

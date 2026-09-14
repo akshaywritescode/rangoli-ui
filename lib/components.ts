@@ -14,6 +14,157 @@ export interface Component {
 
 export const components: Component[] = [
   {
+    id: "event-ticket",
+    name: "Event Ticket",
+    description: "Modern event ticket with perforated edge and gradient design",
+    category: "Cards",
+    date: "2026-09-14",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/EventTicket",
+    html: `"use client";
+
+interface EventTicketProps {
+  eventName: string;
+  eventDate: string;
+  holderName: string;
+  holderRole: string;
+  ticketId: string;
+  eventLogo?: string;
+  backgroundImage?: string;
+}
+
+export default function EventTicket({
+  eventName,
+  eventDate,
+  holderName,
+  holderRole,
+  ticketId,
+  eventLogo,
+  backgroundImage,
+}: EventTicketProps) {
+  return (
+    <div className="relative w-full max-w-3xl">
+      <div className="relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+        <div className="flex">
+          <div className="flex-1 p-8 relative z-10">
+            {eventLogo && (
+              <div className="mb-6">
+                <img src={eventLogo} alt="Event Logo" className="h-8 object-contain" />
+              </div>
+            )}
+
+            <div className="text-zinc-400 text-sm font-medium mb-8 uppercase tracking-wider">
+              {eventDate}
+            </div>
+
+            <div className="border-t border-dashed border-white/10 mb-8"></div>
+
+            <h3 className="text-4xl md:text-5xl font-bold text-white mb-3 font-space-grotesk">
+              {holderName}
+            </h3>
+
+            <p className="text-zinc-400 text-lg mb-8 font-inter">{holderRole}</p>
+
+            <div className="space-y-2">
+              <div className="text-xs text-zinc-500 uppercase tracking-wider">Event Pass</div>
+              <div className="text-pink-500 font-mono text-sm font-semibold">#{ticketId}</div>
+            </div>
+          </div>
+
+          <div className="relative w-0">
+            <div className="absolute top-0 bottom-0 -left-2 w-4 flex flex-col justify-around">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="w-4 h-4 rounded-full bg-black border border-white/10" />
+              ))}
+            </div>
+            <div className="absolute top-0 bottom-0 left-0 w-px border-l-2 border-dashed border-white/10"></div>
+          </div>
+
+          <div className="w-80 relative overflow-hidden">
+            {backgroundImage ? (
+              <img src={backgroundImage} alt="Event visual" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-600/20 via-purple-600/20 to-pink-600/20"></div>
+            )}
+
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)',
+                backgroundSize: '32px 32px'
+              }}></div>
+            </div>
+
+            <div className="relative z-10 h-full flex flex-col items-center justify-center p-8">
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
+                <div className="flex items-center gap-3 whitespace-nowrap">
+                  <span className="text-pink-500 font-mono text-xs font-bold">#{ticketId}</span>
+                  <span className="text-white/90 font-bold text-lg tracking-wider">{holderName}</span>
+                </div>
+              </div>
+
+              <div className="absolute right-6 bottom-8 -rotate-90 origin-bottom-right">
+                <span className="text-white/60 text-xs uppercase tracking-widest">{eventDate}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-black border border-white/10"></div>
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-black border border-white/10"></div>
+      </div>
+    </div>
+  );
+}`,
+    css: `// All styles are built into the component using Tailwind CSS`,
+    usage: `## Usage
+
+A modern event ticket component with perforated edge design, perfect for conferences, concerts, and events.
+
+### Installation
+
+1. Copy the component code to your project: \`components/ui/EventTicket.tsx\`
+
+### Usage Example
+
+\`\`\`tsx
+import EventTicket from "@/components/ui/EventTicket";
+
+export default function MyPage() {
+  return (
+    <EventTicket
+      eventName="INIT Conference"
+      eventDate="August 31 - September 4"
+      holderName="John Doe"
+      holderRole="Appwrite developer"
+      ticketId="INIT-7440B2"
+      eventLogo="/event-logo.png"
+      backgroundImage="/event-bg.jpg"
+    />
+  );
+}
+\`\`\`
+
+### Props
+
+- \`eventName\` (string, required): Name of the event
+- \`eventDate\` (string, required): Event date range or specific date
+- \`holderName\` (string, required): Name of ticket holder
+- \`holderRole\` (string, required): Role or ticket type description
+- \`ticketId\` (string, required): Unique ticket identifier
+- \`eventLogo\` (string, optional): URL to event logo image
+- \`backgroundImage\` (string, optional): URL to background image for right side
+
+### Features
+
+- Modern perforated edge design
+- Gradient background with optional image
+- Responsive layout
+- Pink accent colors
+- Vertical text on right side
+- Ticket ID with pink highlight
+- Clean, professional appearance`,
+  },
+  {
     id: "animated-qr-code",
     name: "Animated QR Code",
     description: "QR code that comes to life with animated dots",
