@@ -70,36 +70,44 @@ export default function EventTicket({
           </div>
 
           <div className="relative w-0">
-            <div className="absolute top-0 bottom-0 -left-2 w-4 flex flex-col justify-around">
+            {/* Semi-circles cutting through */}
+            <div className="absolute top-0 bottom-0 -left-2 w-4 flex flex-col justify-around z-20">
               {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="w-4 h-4 rounded-full bg-black border border-white/10" />
+                <div key={i} className="w-4 h-4 rounded-full bg-black" />
               ))}
             </div>
-            <div className="absolute top-0 bottom-0 left-0 w-px border-l-2 border-dashed border-white/10"></div>
+            {/* Dashed line behind semi-circles */}
+            <div className="absolute top-0 bottom-0 left-0 w-px border-l-2 border-dashed border-white/20 z-10"></div>
           </div>
 
-          <div className="w-80 relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute inset-0" style={{
-                backgroundImage: 'radial-gradient(circle, rgba(236,72,153,0.4) 1px, transparent 1px)',
-                backgroundSize: '20px 20px'
-              }}></div>
-            </div>
+          <div className="w-64 relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 p-8">
+            <div className="relative z-10 h-full flex flex-col items-center justify-between">
+              <div className="text-center">
+                <span className="text-zinc-500 text-xs uppercase tracking-widest">{eventDate}</span>
+              </div>
 
-            <div className="relative z-10 h-full flex flex-col items-end justify-between p-8">
-              {eventLogo && (
-                <img src={eventLogo} alt="Event Logo" className="h-6 object-contain" />
-              )}
+              <div className="flex flex-col items-center gap-6">
+                <div className="flex gap-1 h-32 items-end">
+                  {[4, 8, 3, 6, 9, 4, 7, 5, 8, 3, 6, 4, 7, 9, 5, 6, 3, 8, 4, 7].map((height, i) => (
+                    <div
+                      key={i}
+                      className="bg-white rounded-sm"
+                      style={{ width: '3px', height: \`\${height * 10}%\` }}
+                    />
+                  ))}
+                </div>
 
-              <div className="absolute right-8 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
-                <div className="flex items-center gap-4 whitespace-nowrap">
-                  <span className="text-pink-500 font-mono text-sm font-bold">#{ticketId}</span>
-                  <span className="text-white font-bold text-2xl tracking-wider font-space-grotesk">{holderName}</span>
+                <div className="text-center">
+                  <div className="text-pink-500 font-mono text-xs font-bold tracking-wider">
+                    {ticketId}
+                  </div>
                 </div>
               </div>
 
-              <div className="text-right">
-                <span className="text-zinc-500 text-xs uppercase tracking-widest">{eventDate}</span>
+              <div className="text-center">
+                <div className="text-white/40 text-xs uppercase tracking-[0.2em] font-semibold">
+                  {eventName}
+                </div>
               </div>
             </div>
           </div>
@@ -150,14 +158,14 @@ export default function MyPage() {
 
 ### Features
 
-- Modern perforated edge design
-- Matching gradient background on both sides
+- Modern perforated tear-off edge design
+- Semi-circles cutting through dashed line
+- Barcode-style right side
 - Responsive layout
 - Pink accent colors
-- Vertical text on right side
 - Ticket ID with pink highlight
-- Subtle dot pattern
-- Clean, professional appearance`,
+- Clean, professional appearance
+- Top and bottom notches for authentic ticket feel`,
   },
   {
     id: "animated-qr-code",
