@@ -72,10 +72,10 @@ export default function EventTicket({
           <div className="relative w-0">
             {/* Dashed line */}
             <div className="absolute top-0 bottom-0 left-0 border-l border-dashed border-white/20"></div>
-            {/* Semi-circles cutting through */}
-            <div className="absolute top-0 bottom-0 -left-1 w-2 flex flex-col justify-evenly">
+            {/* Semi-circles cutting through - only show left half */}
+            <div className="absolute top-0 bottom-0 left-0 w-2 flex flex-col justify-evenly overflow-hidden">
               {Array.from({ length: 20 }).map((_, i) => (
-                <div key={i} className="w-2 h-2 rounded-full bg-black" />
+                <div key={i} className="w-4 h-2 rounded-full bg-black -ml-2" />
               ))}
             </div>
           </div>

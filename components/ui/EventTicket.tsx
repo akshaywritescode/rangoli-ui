@@ -20,7 +20,7 @@ export default function EventTicket({
   return (
     <div className="relative w-full max-w-3xl">
       {/* Ticket Container */}
-      <div className="relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl border border-white/10">
+      <div className="relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl border border-white/10 overflow-hidden">
         <div className="flex relative">
           {/* Left Side - Info */}
           <div className="flex-1 p-8 relative z-10">
@@ -58,12 +58,12 @@ export default function EventTicket({
           <div className="relative w-0">
             {/* Dashed line */}
             <div className="absolute top-0 bottom-0 left-0 border-l border-dashed border-white/20"></div>
-            {/* Semi-circles cutting through */}
-            <div className="absolute top-0 bottom-0 -left-1 w-2 flex flex-col justify-evenly">
+            {/* Semi-circles cutting through - only show left half */}
+            <div className="absolute top-0 bottom-0 left-0 w-2 flex flex-col justify-evenly overflow-hidden">
               {Array.from({ length: 20 }).map((_, i) => (
                 <div
                   key={i}
-                  className="w-2 h-2 rounded-full bg-black"
+                  className="w-4 h-2 rounded-full bg-black -ml-2"
                 />
               ))}
             </div>
