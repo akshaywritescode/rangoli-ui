@@ -27,6 +27,26 @@ export async function generateMetadata({ params }: ComponentPageProps) {
   return {
     title: `${component.name} - Rangoli`,
     description: component.description,
+    openGraph: {
+      title: `${component.name} - Rangoli Component Library`,
+      description: component.description,
+      type: "website",
+      url: `https://rangoli.vercel.app/component/${component.id}`,
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: `${component.name} - Rangoli Component`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${component.name} - Rangoli`,
+      description: component.description,
+      images: ["/opengraph-image"],
+    },
   };
 }
 

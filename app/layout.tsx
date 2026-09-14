@@ -20,8 +20,53 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Rangoli - UI Component Library",
-  description: "Beautiful UI components. New component every week.",
+  metadataBase: new URL('https://rangoli.vercel.app'),
+  title: {
+    default: "Rangoli - UI Component Library",
+    template: "%s | Rangoli",
+  },
+  description: "Beautiful UI components. New component every week. Free and open source React components with modern design.",
+  keywords: ["UI components", "React components", "Next.js", "Tailwind CSS", "component library", "design system", "rangoli", "free components"],
+  authors: [{ name: "Akshay" }],
+  creator: "Akshay",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://rangoli.vercel.app",
+    title: "Rangoli - UI Component Library",
+    description: "Beautiful UI components. New component every week. Free and open source React components with modern design.",
+    siteName: "Rangoli",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Rangoli - UI Component Library",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rangoli - UI Component Library",
+    description: "Beautiful UI components. New component every week. Free and open source React components with modern design.",
+    creator: "@yourusername", // Replace with your Twitter handle
+    images: ["/opengraph-image"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: "/icon",
+    apple: "/apple-icon",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
