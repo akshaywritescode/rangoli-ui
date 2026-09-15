@@ -1,21 +1,21 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, ReactNode } from "react";
 
 interface MusicPlayerProps {
   coverImage: string;
   audioSrc: string;
-  songName?: string;
-  artistName?: string;
   scale?: number; // Scale multiplier (1 = default, 1.5 = 150%, 0.75 = 75%, etc.)
+  playIcon?: ReactNode; // Custom play icon (Lucide React or any component)
+  pauseIcon?: ReactNode; // Custom pause icon (Lucide React or any component)
 }
 
 export default function MusicPlayer({ 
   coverImage, 
   audioSrc, 
-  songName, 
-  artistName,
-  scale = 1 
+  scale = 1,
+  playIcon,
+  pauseIcon
 }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDiskOut, setIsDiskOut] = useState(false);
@@ -52,11 +52,22 @@ export default function MusicPlayer({
         onClick={handlePlayPause}
       >
         {/* Play/Pause Icon */}
-        <img
-          src={isPlaying ? "/pause-icon.svg" : "/play-icon.svg"}
-          alt={isPlaying ? "Pause" : "Play"}
-          className="w-12 h-12 z-10"
-        />
+        <div className="w-12 h-12 z-10 flex items-center justify-center text-white">
+          {isPlaying ? (
+            pauseIcon || (
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="6" y="4" width="4" height="16"/>
+                <rect x="14" y="4" width="4" height="16"/>
+              </svg>
+            )
+          ) : (
+            playIcon || (
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            )
+          )}
+        </div>
 
         {/* Disk Wrapper */}
         <div
@@ -126,22 +137,6 @@ export default function MusicPlayer({
           </div>
         </div>
       </div>
-
-      {/* Song Info */}
-      {(songName || artistName) && (
-        <div className="text-center">
-          {songName && (
-            <p className="text-white font-semibold text-sm font-space-grotesk">
-              {songName}
-            </p>
-          )}
-          {artistName && (
-            <p className="text-zinc-400 text-xs font-inter mt-1">
-              {artistName}
-            </p>
-          )}
-        </div>
-      )}
     </div>
   );
 }

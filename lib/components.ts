@@ -376,7 +376,7 @@ This component uses the free QR Server API: https://goqr.me/api/`,
   },
   {
     id: "music-player",
-    name: "Music Player",
+    name: "Instagram Music Player",
     description: "Instagram-style animated music player with rotating disk effect",
     category: "Effects",
     date: "2026-09-14",
@@ -384,17 +384,17 @@ This component uses the free QR Server API: https://goqr.me/api/`,
     reactComponentPath: "@/components/ui/MusicPlayer",
     html: `"use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, ReactNode } from "react";
 
 interface MusicPlayerProps {
   coverImage: string;
   audioSrc: string;
-  songName?: string;
-  artistName?: string;
   scale?: number;
+  playIcon?: ReactNode;
+  pauseIcon?: ReactNode;
 }
 
-export default function MusicPlayer({ coverImage, audioSrc, songName, artistName, scale = 1 }: MusicPlayerProps) {
+export default function MusicPlayer({ coverImage, audioSrc, scale = 1, playIcon, pauseIcon }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDiskOut, setIsDiskOut] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -426,11 +426,22 @@ export default function MusicPlayer({ coverImage, audioSrc, songName, artistName
         }}
         onClick={handlePlayPause}
       >
-        <img
-          src={isPlaying ? "/pause-icon.svg" : "/play-icon.svg"}
-          alt={isPlaying ? "Pause" : "Play"}
-          className="w-12 h-12 z-10"
-        />
+        <div className="w-12 h-12 z-10 flex items-center justify-center text-white">
+          {isPlaying ? (
+            pauseIcon || (
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="6" y="4" width="4" height="16"/>
+                <rect x="14" y="4" width="4" height="16"/>
+              </svg>
+            )
+          ) : (
+            playIcon || (
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            )
+          )}
+        </div>
 
         <div
           className={\`absolute left-0 -z-10 transition-transform duration-1000 ease-in-out \${
@@ -494,21 +505,6 @@ export default function MusicPlayer({ coverImage, audioSrc, songName, artistName
           </div>
         </div>
       </div>
-
-      {(songName || artistName) && (
-        <div className="text-center">
-          {songName && (
-            <p className="text-white font-semibold text-sm font-space-grotesk">
-              {songName}
-            </p>
-          )}
-          {artistName && (
-            <p className="text-zinc-400 text-xs font-inter mt-1">
-              {artistName}
-            </p>
-          )}
-        </div>
-      )}
     </div>
   );
 }`,
@@ -527,14 +523,15 @@ An Instagram-style music player with a rotating disk animation and smooth transi
 
 \`\`\`tsx
 import MusicPlayer from "@/components/ui/MusicPlayer";
+import { Play, Pause } from "lucide-react";
 
 export default function MyPage() {
   return (
     <MusicPlayer 
       coverImage="/path/to/cover.jpg" 
       audioSrc="/path/to/audio.mp3"
-      songName="Song Title"
-      artistName="Artist Name"
+      playIcon={<Play className="w-12 h-12" />}
+      pauseIcon={<Pause className="w-12 h-12" />}
     />
   );
 }
@@ -544,9 +541,9 @@ export default function MyPage() {
 
 - \`coverImage\` (string, required): URL or path to the album cover image
 - \`audioSrc\` (string, required): URL or path to the audio file (mp3, wav, etc.)
-- \`songName\` (string, optional): Name of the song to display below the player
-- \`artistName\` (string, optional): Name of the artist to display below the player
 - \`scale\` (number, optional): Scale multiplier for component size (default: 1, use 1.5 for 150%, 0.75 for 75%, etc.)
+- \`playIcon\` (ReactNode, optional): Custom play icon component (Lucide React icon, image, or any React component). Defaults to built-in SVG icon
+- \`pauseIcon\` (ReactNode, optional): Custom pause icon component (Lucide React icon, image, or any React component). Defaults to built-in SVG icon
 
 ### Features
 
@@ -554,7 +551,8 @@ export default function MyPage() {
 - Animated disk that slides out and rotates
 - Smooth transitions and animations
 - Customizable cover image and audio source
-- Optional song and artist name display
+- Custom play/pause icons support (Lucide React, images, or any React component)
+- Default SVG icons included as fallback
 - Adjustable size with scale prop`,
   },
 ];
