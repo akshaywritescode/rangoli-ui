@@ -31,6 +31,8 @@ interface EventTicketProps {
   ticketId: string;
   eventLogo?: string;
   scale?: number;
+  barcodeImage?: string;
+  theme?: 'dark' | 'light';
 }
 
 export default function EventTicket({
@@ -41,10 +43,28 @@ export default function EventTicket({
   ticketId,
   eventLogo,
   scale = 1,
+  barcodeImage,
+  theme = 'dark',
 }: EventTicketProps) {
+  const bgGradient = theme === 'light' 
+    ? 'from-white via-zinc-50 to-white'
+    : 'from-zinc-900 via-zinc-800 to-zinc-900';
+  
+  const borderColor = theme === 'light' ? 'border-zinc-200' : 'border-white/10';
+  const textPrimary = theme === 'light' ? 'text-zinc-900' : 'text-white';
+  const textSecondary = theme === 'light' ? 'text-zinc-600' : 'text-zinc-400';
+  const textTertiary = theme === 'light' ? 'text-zinc-500' : 'text-zinc-500';
+  const dividerColor = theme === 'light' ? 'border-zinc-200' : 'border-white/10';
+  const notchBg = theme === 'light' ? 'bg-white' : 'bg-black';
+  const notchBorder = theme === 'light' ? 'border-zinc-200' : 'border-white/10';
+  const lineOpacity = theme === 'light' ? '0.3' : '0.5';
+  const circleBg = theme === 'light' ? 'bg-white' : 'bg-black';
+  const circleBorder = theme === 'light' ? 'border-zinc-200' : 'border-white/10';
+  const barcodeColor = theme === 'light' ? 'bg-zinc-900' : 'bg-white';
+
   return (
     <div className="relative w-full max-w-3xl" style={{ transform: \`scale(\${scale})\`, transformOrigin: 'center' }}>
-      <div className="relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl overflow-hidden border border-white/10">
+      <div className={\`relative bg-gradient-to-br \${bgGradient} rounded-2xl border \${borderColor} overflow-hidden\`}>
         <div className="flex">
           <div className="flex-1 p-8 relative z-10">
             {eventLogo && (
@@ -163,6 +183,8 @@ export default function MyPage() {
 - \`ticketId\` (string, required): Unique ticket identifier
 - \`eventLogo\` (string, optional): URL to event logo image
 - \`scale\` (number, optional): Scale multiplier for component size (default: 1, use 1.5 for 150%, 0.75 for 75%, etc.)
+- \`barcodeImage\` (string, optional): Custom barcode or QR code image URL - replaces default barcode
+- \`theme\` ('dark' | 'light', optional): Color theme (default: 'dark')
 
 ### Features
 

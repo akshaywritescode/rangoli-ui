@@ -119,6 +119,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   ticketId="APPLE-2024"
   eventLogo="/event-logo.png"
   scale={1}
+  barcodeImage="/barcode.png"
+  theme="dark"
 />`
   : `<MusicPlayer 
   coverImage="/path/to/cover.jpg" 
