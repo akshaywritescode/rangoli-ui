@@ -35,6 +35,8 @@ interface CreditCardProps {
   backgroundImage?: string;
   gradient?: string;
   flipOnHover?: boolean;
+  className?: string;
+  scale?: number;
 }
 
 export default function CreditCard({
@@ -47,6 +49,8 @@ export default function CreditCard({
   backgroundImage,
   gradient = "from-zinc-900 via-zinc-800 to-zinc-900",
   flipOnHover = false,
+  className = "",
+  scale = 1,
 }: CreditCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -72,7 +76,9 @@ export default function CreditCard({
     <div
       className="perspective-1000"
       style={{ 
-        perspective: '1000px'
+        perspective: '1000px',
+        transform: \`scale(\${scale})\`,
+        transformOrigin: 'center'
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -352,6 +358,8 @@ interface EventTicketProps {
   eventLogo?: string;
   barcodeImage?: string;
   theme?: 'dark' | 'light';
+  className?: string;
+  scale?: number;
 }
 
 export default function EventTicket({
@@ -363,6 +371,8 @@ export default function EventTicket({
   eventLogo,
   barcodeImage,
   theme = 'dark',
+  className = "",
+  scale = 1,
 }: EventTicketProps) {
   const bgGradient = theme === 'light' 
     ? 'from-white via-zinc-50 to-white'
@@ -381,7 +391,7 @@ export default function EventTicket({
   const barcodeColor = theme === 'light' ? 'bg-zinc-900' : 'bg-white';
 
   return (
-    <div className="relative w-full max-w-3xl">
+    <div className="relative w-full max-w-3xl" style={{ transform: \`scale(\${scale})\`, transformOrigin: 'center' }}>
       <div className={\`relative bg-gradient-to-br \${bgGradient} rounded-2xl border \${borderColor} overflow-hidden\`}>
         <div className="flex">
           <div className="flex-1 p-8 relative z-10">
@@ -615,7 +625,7 @@ export default function AnimatedQRCode({
   }, [qrData, size, animationDuration, animated]);
 
   return (
-    <div className={`relative inline-block ${className}`} style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}>
+    <div className={\`relative inline-block \${className}\`} style={{ transform: \`scale(\${scale})\`, transformOrigin: 'center' }}>
       <canvas ref={canvasRef} className="hidden" />
       
       <div 
@@ -716,9 +726,11 @@ interface MusicPlayerProps {
   audioSrc: string;
   playIcon?: ReactNode;
   pauseIcon?: ReactNode;
+  className?: string;
+  scale?: number;
 }
 
-export default function MusicPlayer({ coverImage, audioSrc, playIcon, pauseIcon }: MusicPlayerProps) {
+export default function MusicPlayer({ coverImage, audioSrc, playIcon, pauseIcon, className = "", scale = 1 }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDiskOut, setIsDiskOut] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -738,7 +750,7 @@ export default function MusicPlayer({ coverImage, audioSrc, playIcon, pauseIcon 
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4" style={{ transform: \`scale(\${scale})\`, transformOrigin: 'center' }}>
       <audio ref={audioRef} src={audioSrc} />
       
       <div
