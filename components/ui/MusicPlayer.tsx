@@ -5,7 +5,6 @@ import { useState, useRef, ReactNode } from "react";
 interface MusicPlayerProps {
   coverImage: string;
   audioSrc: string;
-  scale?: number; // Scale multiplier (1 = default, 1.5 = 150%, 0.75 = 75%, etc.)
   playIcon?: ReactNode; // Custom play icon (Lucide React or any component)
   pauseIcon?: ReactNode; // Custom pause icon (Lucide React or any component)
 }
@@ -13,7 +12,6 @@ interface MusicPlayerProps {
 export default function MusicPlayer({ 
   coverImage, 
   audioSrc, 
-  scale = 1,
   playIcon,
   pauseIcon
 }: MusicPlayerProps) {
@@ -38,7 +36,6 @@ export default function MusicPlayer({
   return (
     <div 
       className="flex flex-col items-center justify-center gap-4"
-      style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
     >
       <audio ref={audioRef} src={audioSrc} />
       

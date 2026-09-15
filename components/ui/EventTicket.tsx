@@ -7,7 +7,6 @@ interface EventTicketProps {
   holderRole: string;
   ticketId: string;
   eventLogo?: string;
-  scale?: number; // Scale multiplier (1 = default, 1.5 = 150%, 0.75 = 75%, etc.)
   barcodeImage?: string; // Custom barcode or QR code image URL
   theme?: 'dark' | 'light'; // Color theme (default: 'dark')
 }
@@ -19,7 +18,6 @@ export default function EventTicket({
   holderRole,
   ticketId,
   eventLogo,
-  scale = 1,
   barcodeImage,
   theme = 'dark',
 }: EventTicketProps) {
@@ -46,7 +44,6 @@ export default function EventTicket({
   return (
     <div 
       className="relative w-full max-w-3xl"
-      style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
     >
       {/* Ticket Container */}
       <div className={`relative bg-gradient-to-br ${bgGradient} rounded-2xl border ${borderColor} overflow-hidden`}>
