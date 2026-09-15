@@ -62,7 +62,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                     <h3 className="text-lg font-semibold mb-2 text-white">Create the component file</h3>
                     <p className="text-zinc-400">
                       Copy the code from the Code tab and save it as <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">
-                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : 'components/ui/MusicPlayer.tsx'}
+                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : component.id === 'credit-card' ? 'components/ui/CreditCard.tsx' : 'components/ui/MusicPlayer.tsx'}
                       </code>
                     </p>
                   </div>
@@ -84,6 +84,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                           ? `import AnimatedQRCode from "@/components/ui/AnimatedQRCode";`
                           : component.id === 'event-ticket'
                           ? `import EventTicket from "@/components/ui/EventTicket";`
+                          : component.id === 'credit-card'
+                          ? `import CreditCard from "@/components/ui/CreditCard";`
                           : `import MusicPlayer from "@/components/ui/MusicPlayer";`
                         }
                       </SyntaxHighlighter>
@@ -122,6 +124,17 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   barcodeImage="/barcode.png"
   theme="dark"
 />`
+  : component.id === 'credit-card'
+  ? `<CreditCard
+  cardNumber="1234 5678 9012 3456"
+  cardHolder="AKSHAY KUMAR"
+  expiryDate="12/27"
+  cvv="789"
+  cardBrand="RANGOLI"
+  gradient="from-pink-500 via-purple-600 to-pink-700"
+  scale={1}
+  flipOnHover={false}
+/>`
   : `<MusicPlayer 
   coverImage="/path/to/cover.jpg" 
   audioSrc="/path/to/audio.mp3"
@@ -140,6 +153,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                         ? 'No additional assets required - component uses QR Server API'
                         : component.id === 'event-ticket'
                         ? 'Optional: Add event logo to your public folder'
+                        : component.id === 'credit-card'
+                        ? 'Add the 3D transform CSS utilities to your globals.css (see usage docs)'
                         : 'No additional assets required - default play/pause icons are included. Optionally pass custom icons via props (Lucide React, images, etc.)'
                       }
                     </p>
