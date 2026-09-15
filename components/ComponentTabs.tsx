@@ -118,12 +118,14 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   holderRole="Software Engineer"
   ticketId="APPLE-2024"
   eventLogo="/event-logo.png"
+  scale={1}
 />`
   : `<MusicPlayer 
   coverImage="/path/to/cover.jpg" 
   audioSrc="/path/to/audio.mp3"
   songName="Song Title"
   artistName="Artist Name"
+  scale={1}
 />`}
                       </SyntaxHighlighter>
                     </div>
