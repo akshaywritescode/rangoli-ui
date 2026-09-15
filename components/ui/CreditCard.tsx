@@ -22,8 +22,8 @@ export default function CreditCard({
   cvv = "123",
   cardBrand = "VISA",
   cardBrandLogo,
-  backgroundImage = "/gradient-bgs-Image 34.png",
-  gradient = "from-purple-600 via-blue-500 to-cyan-400",
+  backgroundImage,
+  gradient = "from-zinc-900 via-zinc-800 to-zinc-900",
   scale = 1,
   flipOnHover = false,
 }: CreditCardProps) {
