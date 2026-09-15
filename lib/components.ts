@@ -222,13 +222,15 @@ interface AnimatedQRCodeProps {
   size?: number;
   animationDuration?: number;
   dotColor?: string;
+  animated?: boolean;
 }
 
 export default function AnimatedQRCode({ 
   data, 
   size = 300,
   animationDuration = 0.8,
-  dotColor = "#000000"
+  dotColor = "#000000",
+  animated = true
 }: AnimatedQRCodeProps) {
   const [qrData, setQrData] = useState<string>("");
   const [dots, setDots] = useState<{ x: number; y: number; delay: number; active: boolean }[]>([]);
@@ -270,10 +272,10 @@ export default function AnimatedQRCode({
           
           if (r < 128 && g < 128 && b < 128) {
             newDots.push({
-              x: col * moduleSize + moduleSize / 2,
-              y: row * moduleSize + moduleSize / 2,
-              delay: Math.random() * animationDuration,
-              active: false,
+              x: col * moduleSize,
+              y: row * moduleSize,
+              delay: animated ? Math.random() * animationDuration : 0,
+              active: !animated,
             });
           }
         }
@@ -281,11 +283,13 @@ export default function AnimatedQRCode({
 
       setDots(newDots);
 
-      setTimeout(() => {
-        setDots(prev => prev.map(dot => ({ ...dot, active: true })));
-      }, 100);
+      if (animated) {
+        setTimeout(() => {
+          setDots(prev => prev.map(dot => ({ ...dot, active: true })));
+        }, 100);
+      }
     };
-  }, [qrData, size, animationDuration]);
+  }, [qrData, size, animationDuration, animated]);
 
   return (
     <div className="relative inline-block">
@@ -302,14 +306,12 @@ export default function AnimatedQRCode({
               return (
                 <rect
                   key={i}
-                  x={dotItem.x - moduleSize / 2}
-                  y={dotItem.y - moduleSize / 2}
+                  x={dotItem.x}
+                  y={dotItem.y}
                   width={moduleSize}
                   height={moduleSize}
+                  className="transition-all duration-500 ease-out"
                   style={{
-                    transitionProperty: 'opacity, transform',
-                    transitionDuration: '500ms',
-                    transitionTimingFunction: 'ease-out',
                     transitionDelay: \`\${dotItem.delay}s\`,
                     opacity: dotItem.active ? 1 : 0,
                     transform: dotItem.active ? 'scale(1)' : 'scale(0)',
@@ -358,6 +360,7 @@ export default function MyPage() {
 - \`size\` (number, optional): Size of QR code in pixels (default: 300) - controls the actual QR code dimensions
 - \`animationDuration\` (number, optional): Duration in seconds for dots to form (default: 0.8)
 - \`dotColor\` (string, optional): Color of the QR dots in hex format (default: "#000000")
+- \`animated\` (boolean, optional): Enable/disable animation (default: true) - set to false for instant display
 
 ### Features
 
