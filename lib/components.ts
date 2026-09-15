@@ -73,56 +73,64 @@ export default function EventTicket({
               </div>
             )}
 
-            <div className="text-zinc-400 text-sm font-medium mb-8 uppercase tracking-wider">
+            <div className={\`\${textSecondary} text-sm font-medium mb-8 uppercase tracking-wider\`}>
               {eventDate}
             </div>
 
-            <div className="border-t border-dashed border-white/10 mb-8"></div>
+            <div className={\`border-t border-dashed \${dividerColor} mb-8\`}></div>
 
-            <h3 className="text-4xl md:text-5xl font-bold text-white mb-3 font-space-grotesk">
+            <h3 className={\`text-4xl md:text-5xl font-bold \${textPrimary} mb-3 font-space-grotesk\`}>
               {holderName}
             </h3>
 
-            <p className="text-zinc-400 text-lg mb-8 font-inter">{holderRole}</p>
+            <p className={\`\${textSecondary} text-lg mb-8 font-inter\`}>{holderRole}</p>
 
             <div className="space-y-2">
-              <div className="text-xs text-zinc-500 uppercase tracking-wider">Event Pass</div>
+              <div className={\`text-xs \${textTertiary} uppercase tracking-wider\`}>Event Pass</div>
               <div className="text-pink-500 font-mono text-sm font-semibold">#{ticketId}</div>
             </div>
           </div>
 
           <div className="relative z-20">
-            {/* Vertical dashed line */}
             <div 
               className="absolute top-0 bottom-0 left-0 w-px" 
               style={{
-                backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.5) 0px, rgba(255,255,255,0.5) 6px, transparent 6px, transparent 12px)'
+                backgroundImage: \`repeating-linear-gradient(0deg, rgba(\${theme === 'light' ? '0,0,0' : '255,255,255'},\${lineOpacity}) 0px, rgba(\${theme === 'light' ? '0,0,0' : '255,255,255'},\${lineOpacity}) 6px, transparent 6px, transparent 12px)\`
               }}
             ></div>
-            {/* Semi-circles */}
             <div className="absolute inset-y-0 left-0 flex flex-col justify-evenly -translate-x-1/2">
               {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="w-2 h-2 rounded-full bg-black border border-white/10" />
+                <div key={i} className={\`w-2 h-2 rounded-full \${circleBg} border \${circleBorder}\`} />
               ))}
             </div>
           </div>
 
-          <div className="w-64 relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 p-8 z-10">
+          <div className={\`w-64 relative bg-gradient-to-br \${bgGradient} p-8 z-10\`}>
             <div className="relative z-10 h-full flex flex-col items-center justify-between">
               <div className="text-center">
-                <span className="text-zinc-500 text-xs uppercase tracking-widest">{eventDate}</span>
+                <span className={\`\${textTertiary} text-xs uppercase tracking-widest\`}>{eventDate}</span>
               </div>
 
               <div className="flex flex-col items-center gap-6">
-                <div className="flex gap-1 h-32 items-end">
-                  {[4, 8, 3, 6, 9, 4, 7, 5, 8, 3, 6, 4, 7, 9, 5, 6, 3, 8, 4, 7].map((height, i) => (
-                    <div
-                      key={i}
-                      className="bg-white rounded-sm"
-                      style={{ width: '3px', height: \`\${height * 10}%\` }}
+                {barcodeImage ? (
+                  <div className="flex items-center justify-center h-32">
+                    <img 
+                      src={barcodeImage} 
+                      alt="Barcode" 
+                      className="max-h-32 max-w-full object-contain"
                     />
-                  ))}
-                </div>
+                  </div>
+                ) : (
+                  <div className="flex gap-1 h-32 items-end">
+                    {[4, 8, 3, 6, 9, 4, 7, 5, 8, 3, 6, 4, 7, 9, 5, 6, 3, 8, 4, 7].map((height, i) => (
+                      <div
+                        key={i}
+                        className={\`\${barcodeColor} rounded-sm\`}
+                        style={{ width: '3px', height: \`\${height * 10}%\` }}
+                      />
+                    ))}
+                  </div>
+                )}
 
                 <div className="text-center">
                   <div className="text-pink-500 font-mono text-xs font-bold tracking-wider">
@@ -132,7 +140,7 @@ export default function EventTicket({
               </div>
 
               <div className="text-center">
-                <div className="text-white/40 text-xs uppercase tracking-[0.2em] font-semibold">
+                <div className={\`\${textSecondary} opacity-40 text-xs uppercase tracking-[0.2em] font-semibold\`}>
                   {eventName}
                 </div>
               </div>
@@ -140,8 +148,8 @@ export default function EventTicket({
           </div>
         </div>
 
-        <div className="absolute -top-2 left-[calc(100%-16rem)] -translate-x-1/2 w-4 h-4 rounded-full bg-black border border-white/10 z-20"></div>
-        <div className="absolute -bottom-2 left-[calc(100%-16rem)] -translate-x-1/2 w-4 h-4 rounded-full bg-black border border-white/10 z-20"></div>
+        <div className={\`absolute -top-2 left-[calc(100%-16rem)] -translate-x-1/2 w-4 h-4 rounded-full \${notchBg} border \${notchBorder} z-20\`}></div>
+        <div className={\`absolute -bottom-2 left-[calc(100%-16rem)] -translate-x-1/2 w-4 h-4 rounded-full \${notchBg} border \${notchBorder} z-20\`}></div>
       </div>
     </div>
   );
