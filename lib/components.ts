@@ -124,24 +124,23 @@ export default function CreditCard({
             {/* Top Section: Chip & Logo */}
             <div className="flex justify-between items-start">
               {/* Realistic Chip */}
-              <div className="relative w-16 h-12 rounded-lg overflow-hidden shadow-xl">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-200 via-yellow-300 to-amber-400"></div>
-                <div className="absolute inset-0 opacity-40">
-                  <div className="absolute inset-2 border-2 border-amber-600 rounded"></div>
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-amber-600/30"></div>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-tl from-amber-600/20 via-transparent to-transparent"></div>
+              <div className="relative w-14 h-11">
+                <img 
+                  src="https://pngimg.com/uploads/bank_chip/bank_chip_PNG3.png"
+                  alt="Chip"
+                  className="w-full h-full object-cover rounded-md drop-shadow-lg"
+                />
               </div>
 
               {/* Card Brand */}
               {cardBrandLogo ? (
-                <img src={cardBrandLogo} alt={cardBrand} className="h-16 object-contain drop-shadow-lg" />
+                <img src={cardBrandLogo} alt={cardBrand} className="h-14 object-contain drop-shadow-lg" />
               ) : cardBrand.toUpperCase() === "VISA" ? (
-                <svg width="120" height="40" viewBox="0 0 141.732 141.732" className="drop-shadow-lg">
-                  <g fill="#fff">
-                    <path d="M62.935 89.571h-9.733l6.083-37.384h9.734zM45.014 52.187L35.735 77.9l-1.098-5.537.001.002-3.275-16.812s-.396-3.366-4.617-3.366h-15.34l-.18.633s4.691.976 10.181 4.273l8.456 32.479h10.141l15.485-37.385H45.014zM121.569 89.571h8.937l-7.792-37.385h-7.824c-3.613 0-4.493 2.786-4.493 2.786L95.881 89.571h10.146l2.029-5.553h12.373l1.14 5.553zm-10.71-13.224l5.114-13.99 2.877 13.99h-7.991zM96.642 61.177l1.389-8.028s-4.286-1.63-8.754-1.63c-4.83 0-16.3 2.111-16.3 12.376 0 9.658 13.462 9.778 13.462 14.851s-12.075 4.164-16.06.965l-1.447 8.394s4.346 2.111 10.986 2.111c6.642 0 16.662-3.439 16.662-12.799 0-9.72-13.583-10.625-13.583-14.851.001-4.227 9.48-3.684 13.645-1.389z"/>
-                  </g>
-                </svg>
+                <img 
+                  src="https://download.logo.wine/logo/Visa_Inc./Visa_Inc.-Logo.wine.png"
+                  alt="VISA"
+                  className="h-14 object-contain drop-shadow-lg brightness-0 invert"
+                />
               ) : (
                 <div className="text-3xl font-bold tracking-wider drop-shadow-lg opacity-90">
                   {cardBrand}
@@ -151,7 +150,7 @@ export default function CreditCard({
 
             {/* Middle Section: Card Number */}
             <div className="mt-6">
-              <div className="font-jetbrains-mono text-[22px] tracking-[0.3em] drop-shadow-lg font-semibold whitespace-nowrap">
+              <div className="font-jetbrains-mono text-[22px] tracking-[0.25em] drop-shadow-lg font-semibold whitespace-nowrap">
                 {cardNumber}
               </div>
             </div>
@@ -218,13 +217,13 @@ export default function CreditCard({
             {/* Card Brand on Back */}
             <div className="mt-auto mb-8 px-8 flex justify-end">
               {cardBrandLogo ? (
-                <img src={cardBrandLogo} alt={cardBrand} className="h-12 object-contain opacity-80 drop-shadow-lg" />
+                <img src={cardBrandLogo} alt={cardBrand} className="h-10 object-contain opacity-80 drop-shadow-lg" />
               ) : cardBrand.toUpperCase() === "VISA" ? (
-                <svg width="100" height="32" viewBox="0 0 141.732 141.732" className="drop-shadow-lg opacity-80">
-                  <g fill="#fff">
-                    <path d="M62.935 89.571h-9.733l6.083-37.384h9.734zM45.014 52.187L35.735 77.9l-1.098-5.537.001.002-3.275-16.812s-.396-3.366-4.617-3.366h-15.34l-.18.633s4.691.976 10.181 4.273l8.456 32.479h10.141l15.485-37.385H45.014zM121.569 89.571h8.937l-7.792-37.385h-7.824c-3.613 0-4.493 2.786-4.493 2.786L95.881 89.571h10.146l2.029-5.553h12.373l1.14 5.553zm-10.71-13.224l5.114-13.99 2.877 13.99h-7.991zM96.642 61.177l1.389-8.028s-4.286-1.63-8.754-1.63c-4.83 0-16.3 2.111-16.3 12.376 0 9.658 13.462 9.778 13.462 14.851s-12.075 4.164-16.06.965l-1.447 8.394s4.346 2.111 10.986 2.111c6.642 0 16.662-3.439 16.662-12.799 0-9.72-13.583-10.625-13.583-14.851.001-4.227 9.48-3.684 13.645-1.389z"/>
-                  </g>
-                </svg>
+                <img 
+                  src="https://download.logo.wine/logo/Visa_Inc./Visa_Inc.-Logo.wine.png"
+                  alt="VISA"
+                  className="h-10 object-contain opacity-80 drop-shadow-lg brightness-0 invert"
+                />
               ) : (
                 <div className="text-2xl font-bold tracking-wider opacity-70 drop-shadow-lg">
                   {cardBrand}
