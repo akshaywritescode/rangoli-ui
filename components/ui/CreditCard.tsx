@@ -12,6 +12,8 @@ interface CreditCardProps {
   backgroundImage?: string;
   gradient?: string;
   flipOnHover?: boolean;
+  className?: string;
+  scale?: number;
 }
 
 export default function CreditCard({
@@ -24,6 +26,8 @@ export default function CreditCard({
   backgroundImage,
   gradient = "from-zinc-900 via-zinc-800 to-zinc-900",
   flipOnHover = false,
+  className = "",
+  scale = 1,
 }: CreditCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -49,7 +53,9 @@ export default function CreditCard({
     <div
       className="perspective-1000"
       style={{ 
-        perspective: '1000px'
+        perspective: '1000px',
+        transform: `scale(${scale})`,
+        transformOrigin: 'center'
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -57,7 +63,7 @@ export default function CreditCard({
       <div
         className={`relative w-[420px] h-[260px] cursor-pointer transition-transform duration-700 preserve-3d ${
           isFlipped ? 'rotate-y-180' : ''
-        }`}
+        } ${className}`}
         onClick={handleFlip}
         style={{
           transformStyle: 'preserve-3d',

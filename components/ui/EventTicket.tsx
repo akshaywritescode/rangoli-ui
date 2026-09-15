@@ -7,8 +7,10 @@ interface EventTicketProps {
   holderRole: string;
   ticketId: string;
   eventLogo?: string;
-  barcodeImage?: string; // Custom barcode or QR code image URL
-  theme?: 'dark' | 'light'; // Color theme (default: 'dark')
+  barcodeImage?: string;
+  theme?: 'dark' | 'light';
+  className?: string;
+  scale?: number;
 }
 
 export default function EventTicket({
@@ -20,6 +22,8 @@ export default function EventTicket({
   eventLogo,
   barcodeImage,
   theme = 'dark',
+  className = "",
+  scale = 1,
 }: EventTicketProps) {
   // Theme-based colors
   const bgGradient = theme === 'light' 
@@ -43,7 +47,8 @@ export default function EventTicket({
 
   return (
     <div 
-      className="relative w-full max-w-3xl"
+      className={`relative w-full max-w-3xl ${className}`}
+      style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
     >
       {/* Ticket Container */}
       <div className={`relative bg-gradient-to-br ${bgGradient} rounded-2xl border ${borderColor} overflow-hidden`}>

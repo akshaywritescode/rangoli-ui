@@ -315,6 +315,8 @@ export default function MyPage() {
 - \`cardBrandLogo\` (string, optional): URL to card brand logo image
 - \`backgroundImage\` (string, optional): Custom background image URL - overrides gradient
 - \`gradient\` (string, optional): Tailwind gradient classes (default: "from-zinc-900 via-zinc-800 to-zinc-900" - dark/black gradient)
+- \`className\` (string, optional): Additional CSS classes for styling
+- \`scale\` (number, optional): Scale multiplier (default: 1, use 0.8 for 80%, 1.2 for 120%, etc.)
 - \`flipOnHover\` (boolean, optional): Flip on hover instead of click (default: false)
 
 ### Features
@@ -508,6 +510,8 @@ export default function MyPage() {
 - \`eventLogo\` (string, optional): URL to event logo image
 - \`barcodeImage\` (string, optional): Custom barcode or QR code image URL - replaces default barcode
 - \`theme\` ('dark' | 'light', optional): Color theme (default: 'dark')
+- \`className\` (string, optional): Additional CSS classes for styling
+- \`scale\` (number, optional): Scale multiplier (default: 1, use 0.8 for 80%, 1.2 for 120%, etc.)
 
 ### Features
 
@@ -538,6 +542,8 @@ interface AnimatedQRCodeProps {
   animationDuration?: number;
   dotColor?: string;
   animated?: boolean;
+  className?: string;
+  scale?: number;
 }
 
 export default function AnimatedQRCode({ 
@@ -545,7 +551,9 @@ export default function AnimatedQRCode({
   size = 300,
   animationDuration = 0.8,
   dotColor = "#000000",
-  animated = true
+  animated = true,
+  className = "",
+  scale = 1
 }: AnimatedQRCodeProps) {
   const [qrData, setQrData] = useState<string>("");
   const [dots, setDots] = useState<{ x: number; y: number; delay: number; active: boolean }[]>([]);
@@ -607,7 +615,7 @@ export default function AnimatedQRCode({
   }, [qrData, size, animationDuration, animated]);
 
   return (
-    <div className="relative inline-block">
+    <div className={`relative inline-block ${className}`} style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}>
       <canvas ref={canvasRef} className="hidden" />
       
       <div 
@@ -676,6 +684,8 @@ export default function MyPage() {
 - \`animationDuration\` (number, optional): Duration in seconds for dots to form (default: 0.8)
 - \`dotColor\` (string, optional): Color of the QR dots in hex format (default: "#000000")
 - \`animated\` (boolean, optional): Enable/disable animation (default: true) - set to false for instant display
+- \`className\` (string, optional): Additional CSS classes for styling
+- \`scale\` (number, optional): Scale multiplier (default: 1, use 0.8 for 80%, 1.2 for 120%, etc.)
 
 ### Features
 
@@ -857,6 +867,8 @@ export default function MyPage() {
 - \`audioSrc\` (string, required): URL or path to the audio file (mp3, wav, etc.)
 - \`playIcon\` (ReactNode, optional): Custom play icon component (Lucide React icon, image, or any React component). Defaults to built-in SVG icon
 - \`pauseIcon\` (ReactNode, optional): Custom pause icon component (Lucide React icon, image, or any React component). Defaults to built-in SVG icon
+- \`className\` (string, optional): Additional CSS classes for styling
+- \`scale\` (number, optional): Scale multiplier (default: 1, use 0.8 for 80%, 1.2 for 120%, etc.)
 
 ### Features
 
@@ -865,6 +877,7 @@ export default function MyPage() {
 - Smooth transitions and animations
 - Customizable cover image and audio source
 - Custom play/pause icons support (Lucide React, images, or any React component)
-- Default SVG icons included as fallback`,
+- Default SVG icons included as fallback
+- Adjustable size with scale prop`,
   },
 ];

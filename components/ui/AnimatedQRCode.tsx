@@ -5,9 +5,11 @@ import { useState, useEffect, useRef } from "react";
 interface AnimatedQRCodeProps {
   data: string;
   size?: number;
-  animationDuration?: number; // in seconds
+  animationDuration?: number;
   dotColor?: string;
-  animated?: boolean; // Enable/disable animation (default: true)
+  animated?: boolean;
+  className?: string;
+  scale?: number;
 }
 
 export default function AnimatedQRCode({ 
@@ -15,7 +17,9 @@ export default function AnimatedQRCode({
   size = 300,
   animationDuration = 0.8,
   dotColor = "#000000",
-  animated = true
+  animated = true,
+  className = "",
+  scale = 1
 }: AnimatedQRCodeProps) {
   const [qrData, setQrData] = useState<string>("");
   const [dots, setDots] = useState<{ x: number; y: number; delay: number; active: boolean }[]>([]);
@@ -83,7 +87,7 @@ export default function AnimatedQRCode({
   }, [qrData, size, animationDuration, animated]);
 
   return (
-    <div className="relative inline-block">
+    <div className={`relative inline-block ${className}`} style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}>
       {/* Hidden canvas for processing */}
       <canvas ref={canvasRef} className="hidden" />
       

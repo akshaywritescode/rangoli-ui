@@ -5,15 +5,19 @@ import { useState, useRef, ReactNode } from "react";
 interface MusicPlayerProps {
   coverImage: string;
   audioSrc: string;
-  playIcon?: ReactNode; // Custom play icon (Lucide React or any component)
-  pauseIcon?: ReactNode; // Custom pause icon (Lucide React or any component)
+  playIcon?: ReactNode;
+  pauseIcon?: ReactNode;
+  className?: string;
+  scale?: number;
 }
 
 export default function MusicPlayer({ 
   coverImage, 
   audioSrc, 
   playIcon,
-  pauseIcon
+  pauseIcon,
+  className = "",
+  scale = 1
 }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDiskOut, setIsDiskOut] = useState(false);
@@ -35,7 +39,8 @@ export default function MusicPlayer({
 
   return (
     <div 
-      className="flex flex-col items-center justify-center gap-4"
+      className={`flex flex-col items-center justify-center gap-4 ${className}`}
+      style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
     >
       <audio ref={audioRef} src={audioSrc} />
       
