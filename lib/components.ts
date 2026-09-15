@@ -426,20 +426,18 @@ export default function MusicPlayer({ coverImage, audioSrc, scale = 1, playIcon,
         }}
         onClick={handlePlayPause}
       >
-        <div className="w-16 h-16 z-10 flex items-center justify-center">
+        <div className="w-12 h-12 z-10 flex items-center justify-center">
           {isPlaying ? (
             pauseIcon || (
-              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="32" fill="white" fillOpacity="0.9"/>
-                <rect x="22" y="20" width="6" height="24" rx="2" fill="black"/>
-                <rect x="36" y="20" width="6" height="24" rx="2" fill="black"/>
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="14" y="12" width="6" height="24" rx="2" fill="white"/>
+                <rect x="28" y="12" width="6" height="24" rx="2" fill="white"/>
               </svg>
             )
           ) : (
             playIcon || (
-              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="32" fill="white" fillOpacity="0.9"/>
-                <path d="M26 20L46 32L26 44V20Z" fill="black"/>
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 10C16 8.89543 17.0447 8.2 18 8.7L36 20.7C36.9553 21.2 36.9553 22.8 36 23.3L18 35.3C17.0447 35.8 16 35.1046 16 34V10Z" fill="white"/>
               </svg>
             )
           )}
