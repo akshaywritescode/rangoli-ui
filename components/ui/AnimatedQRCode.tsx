@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 interface AnimatedQRCodeProps {
   data: string;
@@ -20,6 +20,13 @@ export default function AnimatedQRCode({
   const [qrData, setQrData] = useState<string>("");
   const [dots, setDots] = useState<{ x: number; y: number; delay: number; active: boolean }[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  // Memoize module size calculation
+  const moduleSize = useMemo(() => {
+    if (dots.length === 0) return 10;
+    const moduleCount = Math.ceil(Math.sqrt(dots.length));
+    return size / moduleCount;
+  }, [dots.length, size]);
 
   // Generate QR code URL using QR Server API
   useEffect(() => {
@@ -107,29 +114,22 @@ export default function AnimatedQRCode({
         <div className="relative" style={{ width: size, height: size }}>
           {/* Animated dots */}
           <svg width={size} height={size} className="absolute inset-0">
-            {dots.map((dotItem, i) => {
-              // Calculate module size from first dot position if available
-              const moduleSize = dots.length > 0 ? size / Math.sqrt(dots.length * 1.5) : 10;
-              return (
-                <rect
-                  key={i}
-                  x={dotItem.x}
-                  y={dotItem.y}
-                  width={moduleSize}
-                  height={moduleSize}
-                  style={{
-                    transitionProperty: 'opacity, transform',
-                    transitionDuration: '500ms',
-                    transitionTimingFunction: 'ease-out',
-                    transitionDelay: `${dotItem.delay}s`,
-                    opacity: dotItem.active ? 1 : 0,
-                    transform: dotItem.active ? 'scale(1)' : 'scale(0)',
-                    transformOrigin: 'center',
-                  }}
-                  fill={dotColor}
-                />
-              );
-            })}
+            {dots.map((dotItem, i) => (
+              <rect
+                key={i}
+                x={dotItem.x}
+                y={dotItem.y}
+                width={moduleSize}
+                height={moduleSize}
+                style={{
+                  opacity: dotItem.active ? 1 : 0,
+                  transform: dotItem.active ? 'scale(1)' : 'scale(0)',
+                  transformOrigin: 'center',
+                  transition: `opacity ${animationDuration * 0.5}s ease-out ${dotItem.delay}s, transform ${animationDuration * 0.5}s ease-out ${dotItem.delay}s`,
+                }}
+                fill={dotColor}
+              />
+            ))}
           </svg>
         </div>
       </div>
