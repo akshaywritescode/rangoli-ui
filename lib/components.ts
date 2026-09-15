@@ -34,7 +34,6 @@ interface CreditCardProps {
   cardBrandLogo?: string;
   backgroundImage?: string;
   gradient?: string;
-  scale?: number;
   flipOnHover?: boolean;
 }
 
@@ -47,7 +46,6 @@ export default function CreditCard({
   cardBrandLogo,
   backgroundImage,
   gradient = "from-zinc-900 via-zinc-800 to-zinc-900",
-  scale = 1,
   flipOnHover = false,
 }: CreditCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -74,8 +72,6 @@ export default function CreditCard({
     <div
       className="perspective-1000"
       style={{ 
-        transform: \`scale(\${scale})\`, 
-        transformOrigin: 'center',
         perspective: '1000px'
       }}
       onMouseEnter={handleMouseEnter}
@@ -319,7 +315,6 @@ export default function MyPage() {
 - \`cardBrandLogo\` (string, optional): URL to card brand logo image
 - \`backgroundImage\` (string, optional): Custom background image URL - overrides gradient
 - \`gradient\` (string, optional): Tailwind gradient classes (default: "from-zinc-900 via-zinc-800 to-zinc-900" - dark/black gradient)
-- \`scale\` (number, optional): Scale multiplier for component size (default: 1)
 - \`flipOnHover\` (boolean, optional): Flip on hover instead of click (default: false)
 
 ### Features
@@ -353,7 +348,6 @@ interface EventTicketProps {
   holderRole: string;
   ticketId: string;
   eventLogo?: string;
-  scale?: number;
   barcodeImage?: string;
   theme?: 'dark' | 'light';
 }
@@ -365,7 +359,6 @@ export default function EventTicket({
   holderRole,
   ticketId,
   eventLogo,
-  scale = 1,
   barcodeImage,
   theme = 'dark',
 }: EventTicketProps) {
@@ -386,7 +379,7 @@ export default function EventTicket({
   const barcodeColor = theme === 'light' ? 'bg-zinc-900' : 'bg-white';
 
   return (
-    <div className="relative w-full max-w-3xl" style={{ transform: \`scale(\${scale})\`, transformOrigin: 'center' }}>
+    <div className="relative w-full max-w-3xl">
       <div className={\`relative bg-gradient-to-br \${bgGradient} rounded-2xl border \${borderColor} overflow-hidden\`}>
         <div className="flex">
           <div className="flex-1 p-8 relative z-10">
@@ -513,7 +506,6 @@ export default function MyPage() {
 - \`holderRole\` (string, required): Role or ticket type description
 - \`ticketId\` (string, required): Unique ticket identifier
 - \`eventLogo\` (string, optional): URL to event logo image
-- \`scale\` (number, optional): Scale multiplier for component size (default: 1, use 1.5 for 150%, 0.75 for 75%, etc.)
 - \`barcodeImage\` (string, optional): Custom barcode or QR code image URL - replaces default barcode
 - \`theme\` ('dark' | 'light', optional): Color theme (default: 'dark')
 
@@ -712,12 +704,11 @@ import { useState, useRef, ReactNode } from "react";
 interface MusicPlayerProps {
   coverImage: string;
   audioSrc: string;
-  scale?: number;
   playIcon?: ReactNode;
   pauseIcon?: ReactNode;
 }
 
-export default function MusicPlayer({ coverImage, audioSrc, scale = 1, playIcon, pauseIcon }: MusicPlayerProps) {
+export default function MusicPlayer({ coverImage, audioSrc, playIcon, pauseIcon }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDiskOut, setIsDiskOut] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -737,7 +728,7 @@ export default function MusicPlayer({ coverImage, audioSrc, scale = 1, playIcon,
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4" style={{ transform: \`scale(\${scale})\`, transformOrigin: 'center' }}>
+    <div className="flex flex-col items-center justify-center gap-4">
       <audio ref={audioRef} src={audioSrc} />
       
       <div
@@ -864,7 +855,6 @@ export default function MyPage() {
 
 - \`coverImage\` (string, required): URL or path to the album cover image
 - \`audioSrc\` (string, required): URL or path to the audio file (mp3, wav, etc.)
-- \`scale\` (number, optional): Scale multiplier for component size (default: 1, use 1.5 for 150%, 0.75 for 75%, etc.)
 - \`playIcon\` (ReactNode, optional): Custom play icon component (Lucide React icon, image, or any React component). Defaults to built-in SVG icon
 - \`pauseIcon\` (ReactNode, optional): Custom pause icon component (Lucide React icon, image, or any React component). Defaults to built-in SVG icon
 
@@ -875,7 +865,6 @@ export default function MyPage() {
 - Smooth transitions and animations
 - Customizable cover image and audio source
 - Custom play/pause icons support (Lucide React, images, or any React component)
-- Default SVG icons included as fallback
-- Adjustable size with scale prop`,
+- Default SVG icons included as fallback`,
   },
 ];
