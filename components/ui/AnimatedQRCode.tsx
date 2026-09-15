@@ -7,13 +7,15 @@ interface AnimatedQRCodeProps {
   size?: number;
   animationDuration?: number; // in seconds
   dotColor?: string;
+  animated?: boolean; // Enable/disable animation (default: true)
 }
 
 export default function AnimatedQRCode({ 
   data, 
   size = 300,
   animationDuration = 0.8,
-  dotColor = "#000000"
+  dotColor = "#000000",
+  animated = true
 }: AnimatedQRCodeProps) {
   const [qrData, setQrData] = useState<string>("");
   const [dots, setDots] = useState<{ x: number; y: number; delay: number; active: boolean }[]>([]);
@@ -43,11 +45,25 @@ export default function AnimatedQRCode({
       ctx.drawImage(img, 0, 0, size, size);
 
       const imageData = ctx.getImageData(0, 0, size, size);
-      const moduleSize = size / 33; // QR codes typically have 33x33 modules for version 1
+      
+      // Detect QR module size by finding the first transition
+      let moduleSize = 1;
+      for (let i = 0; i < size; i++) {
+        const idx = i * 4;
+        const nextIdx = (i + 1) * 4;
+        const curr = imageData.data[idx];
+        const next = imageData.data[nextIdx];
+        if (Math.abs(curr - next) > 100) {
+          moduleSize = i + 1;
+          break;
+        }
+      }
+      
+      const modules = Math.floor(size / moduleSize);
       const newDots: { x: number; y: number; delay: number; active: boolean }[] = [];
 
-      for (let row = 0; row < 33; row++) {
-        for (let col = 0; col < 33; col++) {
+      for (let row = 0; row < modules; row++) {
+        for (let col = 0; col < modules; col++) {
           const x = Math.floor(col * moduleSize + moduleSize / 2);
           const y = Math.floor(row * moduleSize + moduleSize / 2);
           const index = (y * size + x) * 4;
@@ -58,10 +74,10 @@ export default function AnimatedQRCode({
           // If pixel is dark (part of QR code)
           if (r < 128 && g < 128 && b < 128) {
             newDots.push({
-              x: col * moduleSize + moduleSize / 2,
-              y: row * moduleSize + moduleSize / 2,
-              delay: Math.random() * animationDuration,
-              active: false,
+              x: col * moduleSize,
+              y: row * moduleSize,
+              delay: animated ? Math.random() * animationDuration : 0,
+              active: !animated, // If not animated, show immediately
             });
           }
         }
@@ -70,11 +86,13 @@ export default function AnimatedQRCode({
       setDots(newDots);
 
       // Animate dots coming to life
-      setTimeout(() => {
-        setDots(prev => prev.map(dot => ({ ...dot, active: true })));
-      }, 100);
+      if (animated) {
+        setTimeout(() => {
+          setDots(prev => prev.map(dot => ({ ...dot, active: true })));
+        }, 100);
+      }
     };
-  }, [qrData, size, animationDuration]);
+  }, [qrData, size, animationDuration, animated]);
 
   return (
     <div className="relative inline-block">
@@ -90,12 +108,13 @@ export default function AnimatedQRCode({
           {/* Animated dots */}
           <svg width={size} height={size} className="absolute inset-0">
             {dots.map((dotItem, i) => {
-              const moduleSize = size / 33;
+              // Calculate module size from first dot position if available
+              const moduleSize = dots.length > 0 ? size / Math.sqrt(dots.length * 1.5) : 10;
               return (
                 <rect
                   key={i}
-                  x={dotItem.x - moduleSize / 2}
-                  y={dotItem.y - moduleSize / 2}
+                  x={dotItem.x}
+                  y={dotItem.y}
                   width={moduleSize}
                   height={moduleSize}
                   style={{
