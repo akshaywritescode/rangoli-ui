@@ -45,8 +45,8 @@ export default function CreditCard({
   cvv = "123",
   cardBrand = "VISA",
   cardBrandLogo,
-  backgroundImage,
-  gradient = "from-[#667eea] via-[#764ba2] to-[#f093fb]",
+  backgroundImage = "/gradient-bgs-Image 34.png",
+  gradient = "from-purple-600 via-blue-500 to-cyan-400",
   scale = 1,
   flipOnHover = false,
 }: CreditCardProps) {
@@ -124,7 +124,7 @@ export default function CreditCard({
             {/* Top Section: Chip & Logo */}
             <div className="flex justify-between items-start">
               {/* Realistic Chip */}
-              <div className="relative w-14 h-11">
+              <div className="relative w-16 h-12">
                 <img 
                   src="https://pngimg.com/uploads/bank_chip/bank_chip_PNG3.png"
                   alt="Chip"
@@ -278,7 +278,7 @@ export default function MyPage() {
       expiryDate="02/28"
       cvv="123"
       cardBrand="VISA"
-      gradient="from-[#667eea] via-[#764ba2] to-[#f093fb]"
+      gradient="from-purple-600 via-blue-500 to-cyan-400"
     />
   );
 }
@@ -306,7 +306,7 @@ export default function MyPage() {
 - \`cardBrand\` (string, optional): Card brand text (default: "VISA")
 - \`cardBrandLogo\` (string, optional): URL to card brand logo image
 - \`backgroundImage\` (string, optional): Custom background image URL - overrides gradient
-- \`gradient\` (string, optional): Tailwind gradient classes (default: "from-[#667eea] via-[#764ba2] to-[#f093fb]")
+- \`gradient\` (string, optional): Tailwind gradient classes (default: "from-purple-600 via-blue-500 to-cyan-400")
 - \`scale\` (number, optional): Scale multiplier for component size (default: 1)
 - \`flipOnHover\` (boolean, optional): Flip on hover instead of click (default: false)
 

@@ -22,8 +22,8 @@ export default function CreditCard({
   cvv = "123",
   cardBrand = "VISA",
   cardBrandLogo,
-  backgroundImage,
-  gradient = "from-[#667eea] via-[#764ba2] to-[#f093fb]",
+  backgroundImage = "/gradient-bgs-Image 34.png",
+  gradient = "from-purple-600 via-blue-500 to-cyan-400",
   scale = 1,
   flipOnHover = false,
 }: CreditCardProps) {
@@ -101,7 +101,7 @@ export default function CreditCard({
             {/* Top Section: Chip & Logo */}
             <div className="flex justify-between items-start">
               {/* Realistic Chip */}
-              <div className="relative w-14 h-11">
+              <div className="relative w-16 h-12">
                 <img 
                   src="https://pngimg.com/uploads/bank_chip/bank_chip_PNG3.png"
                   alt="Chip"
