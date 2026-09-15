@@ -125,9 +125,9 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   : `<MusicPlayer 
   coverImage="/path/to/cover.jpg" 
   audioSrc="/path/to/audio.mp3"
-  songName="Song Title"
-  artistName="Artist Name"
   scale={1}
+  playIcon={<Play className="w-12 h-12" />}
+  pauseIcon={<Pause className="w-12 h-12" />}
 />`}
                       </SyntaxHighlighter>
                     </div>
@@ -140,7 +140,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                         ? 'No additional assets required - component uses QR Server API'
                         : component.id === 'event-ticket'
                         ? 'Optional: Add event logo to your public folder'
-                        : <>Place <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">play-icon.svg</code> and <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">pause-icon.svg</code> in your public folder</>
+                        : 'No additional assets required - default play/pause icons are included. Optionally pass custom icons via props (Lucide React, images, etc.)'
                       }
                     </p>
                   </div>

@@ -426,18 +426,20 @@ export default function MusicPlayer({ coverImage, audioSrc, scale = 1, playIcon,
         }}
         onClick={handlePlayPause}
       >
-        <div className="w-12 h-12 z-10 flex items-center justify-center text-white">
+        <div className="w-16 h-16 z-10 flex items-center justify-center">
           {isPlaying ? (
             pauseIcon || (
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="6" y="4" width="4" height="16"/>
-                <rect x="14" y="4" width="4" height="16"/>
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="32" fill="white" fillOpacity="0.9"/>
+                <rect x="22" y="20" width="6" height="24" rx="2" fill="black"/>
+                <rect x="36" y="20" width="6" height="24" rx="2" fill="black"/>
               </svg>
             )
           ) : (
             playIcon || (
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="5 3 19 12 5 21 5 3"/>
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="32" fill="white" fillOpacity="0.9"/>
+                <path d="M26 20L46 32L26 44V20Z" fill="black"/>
               </svg>
             )
           )}
