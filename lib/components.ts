@@ -278,13 +278,12 @@ export default function MyPage() {
       expiryDate="02/28"
       cvv="123"
       cardBrand="VISA"
-      gradient="from-purple-600 via-blue-500 to-cyan-400"
     />
   );
 }
 \`\`\`
 
-### With Background Image
+### With Custom Background
 
 \`\`\`tsx
 <CreditCard
@@ -293,7 +292,21 @@ export default function MyPage() {
   expiryDate="02/28"
   cvv="123"
   cardBrand="VISA"
-  backgroundImage="/card-texture.jpg"
+  backgroundImage="/custom-card-bg.jpg"
+/>
+\`\`\`
+
+### With Tailwind Gradient
+
+\`\`\`tsx
+<CreditCard
+  cardNumber="•••• •••• •••• 4567"
+  cardHolder="JOHN DOE"
+  expiryDate="02/28"
+  cvv="123"
+  cardBrand="VISA"
+  backgroundImage=""
+  gradient="from-pink-500 via-purple-600 to-indigo-600"
 />
 \`\`\`
 
@@ -305,8 +318,8 @@ export default function MyPage() {
 - \`cvv\` (string, optional): 3-digit CVV code on back (default: "123")
 - \`cardBrand\` (string, optional): Card brand text (default: "VISA")
 - \`cardBrandLogo\` (string, optional): URL to card brand logo image
-- \`backgroundImage\` (string, optional): Custom background image URL - overrides gradient
-- \`gradient\` (string, optional): Tailwind gradient classes (default: "from-purple-600 via-blue-500 to-cyan-400")
+- \`backgroundImage\` (string, optional): Custom background image URL (default: "/gradient-bgs-Image 34.png") - set to empty string to use gradient instead
+- \`gradient\` (string, optional): Tailwind gradient classes, only used if backgroundImage is empty (default: "from-purple-600 via-blue-500 to-cyan-400")
 - \`scale\` (number, optional): Scale multiplier for component size (default: 1)
 - \`flipOnHover\` (boolean, optional): Flip on hover instead of click (default: false)
 
@@ -314,14 +327,16 @@ export default function MyPage() {
 
 - Smooth 3D flip animation (700ms)
 - Click to flip or hover mode
-- Realistic gold chip design with grid pattern
+- Realistic gold chip image (bank_chip_PNG3.png)
+- Large white VISA logo with proper branding
 - Wave pattern overlay for depth
 - Gradient orbs for visual interest
-- Background image support
-- Beautiful default gradient (purple-pink)
+- Beautiful default gradient background image
+- Custom background image support
+- Tailwind gradient fallback option
 - Magnetic stripe and CVV panel on back
 - Drop shadows for 3D depth
-- Customizable everything`,
+- Fully customizable props`,
   },
   {
     id: "event-ticket",

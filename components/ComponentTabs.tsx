@@ -131,7 +131,6 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   expiryDate="02/28"
   cvv="123"
   cardBrand="VISA"
-  gradient="from-[#667eea] via-[#764ba2] to-[#f093fb]"
   scale={1}
   flipOnHover={false}
 />`
@@ -154,7 +153,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                         : component.id === 'event-ticket'
                         ? 'Optional: Add event logo to your public folder'
                         : component.id === 'credit-card'
-                        ? 'Add the 3D transform CSS utilities to your globals.css (see usage docs)'
+                        ? 'Default gradient background included. Add the 3D transform CSS utilities to your globals.css (see usage docs)'
                         : 'No additional assets required - default play/pause icons are included. Optionally pass custom icons via props (Lucide React, images, etc.)'
                       }
                     </p>
