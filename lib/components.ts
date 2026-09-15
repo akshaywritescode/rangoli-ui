@@ -32,19 +32,21 @@ interface CreditCardProps {
   cvv?: string;
   cardBrand?: string;
   cardBrandLogo?: string;
+  backgroundImage?: string;
   gradient?: string;
   scale?: number;
   flipOnHover?: boolean;
 }
 
 export default function CreditCard({
-  cardNumber = "1234 5678 9012 3456",
+  cardNumber = "•••• •••• •••• 4567",
   cardHolder = "JOHN DOE",
-  expiryDate = "12/25",
+  expiryDate = "02/28",
   cvv = "123",
   cardBrand = "VISA",
   cardBrandLogo,
-  gradient = "from-pink-500 via-purple-600 to-indigo-600",
+  backgroundImage,
+  gradient = "from-[#667eea] via-[#764ba2] to-[#f093fb]",
   scale = 1,
   flipOnHover = false,
 }: CreditCardProps) {
@@ -80,7 +82,7 @@ export default function CreditCard({
       onMouseLeave={handleMouseLeave}
     >
       <div
-        className={\`relative w-[400px] h-[250px] cursor-pointer transition-transform duration-700 preserve-3d \${
+        className={\`relative w-[420px] h-[260px] cursor-pointer transition-transform duration-700 preserve-3d \${
           isFlipped ? 'rotate-y-180' : ''
         }\`}
         onClick={handleFlip}
@@ -91,94 +93,132 @@ export default function CreditCard({
       >
         {/* Front of Card */}
         <div
-          className={\`absolute w-full h-full rounded-2xl bg-gradient-to-br \${gradient} p-6 shadow-2xl backface-hidden\`}
-          style={{ backfaceVisibility: 'hidden' }}
+          className={\`absolute w-full h-full rounded-3xl shadow-2xl backface-hidden overflow-hidden \${
+            backgroundImage ? '' : \`bg-gradient-to-br \${gradient}\`
+          }\`}
+          style={{ 
+            backfaceVisibility: 'hidden',
+            backgroundImage: backgroundImage ? \`url(\${backgroundImage})\` : undefined,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
         >
-          <div className="flex flex-col justify-between h-full text-white">
-            {/* Card Brand Logo */}
+          {/* Wave Pattern Overlay */}
+          <div className="absolute inset-0 opacity-20">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="wave" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                  <path d="M0 50 Q 25 30, 50 50 T 100 50" stroke="white" strokeWidth="1" fill="none" opacity="0.3"/>
+                  <path d="M0 70 Q 25 50, 50 70 T 100 70" stroke="white" strokeWidth="1" fill="none" opacity="0.2"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#wave)" />
+            </svg>
+          </div>
+
+          {/* Gradient Orbs */}
+          <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+
+          <div className="relative flex flex-col justify-between h-full p-8 text-white z-10">
+            {/* Top Section: Chip & Logo */}
             <div className="flex justify-between items-start">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-300 to-yellow-500 flex items-center justify-center">
-                <div className="w-8 h-6 rounded bg-gradient-to-br from-yellow-400 to-yellow-200"></div>
+              {/* Realistic Chip */}
+              <div className="relative w-14 h-11 rounded-lg overflow-hidden shadow-lg">
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400"></div>
+                <div className="absolute inset-0.5 bg-gradient-to-br from-yellow-100 via-yellow-200 to-yellow-300 rounded-md"></div>
+                <div className="absolute inset-1 grid grid-cols-4 gap-0.5 p-1">
+                  {Array.from({ length: 16 }).map((_, i) => (
+                    <div key={i} className="bg-yellow-400/60 rounded-[1px]"></div>
+                  ))}
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-yellow-600/30"></div>
               </div>
+
+              {/* Card Brand */}
               {cardBrandLogo ? (
-                <img src={cardBrandLogo} alt={cardBrand} className="h-12 object-contain" />
+                <img src={cardBrandLogo} alt={cardBrand} className="h-10 object-contain drop-shadow-lg" />
               ) : (
-                <div className="text-2xl font-bold tracking-wider opacity-80">{cardBrand}</div>
+                <div className="text-2xl font-bold tracking-wider drop-shadow-lg opacity-90">
+                  {cardBrand}
+                </div>
               )}
             </div>
 
-            {/* Card Number */}
-            <div className="space-y-4">
-              <div className="font-jetbrains-mono text-2xl tracking-widest">
+            {/* Middle Section: Card Number */}
+            <div className="mt-6">
+              <div className="font-jetbrains-mono text-[22px] tracking-[0.3em] drop-shadow-lg font-semibold">
                 {cardNumber}
               </div>
+            </div>
 
-              {/* Card Holder and Expiry */}
-              <div className="flex justify-between items-end">
-                <div>
-                  <div className="text-xs opacity-70 uppercase tracking-wider mb-1">Card Holder</div>
-                  <div className="font-semibold text-sm tracking-wider font-space-grotesk">
-                    {cardHolder}
-                  </div>
+            {/* Bottom Section: Holder & Expiry */}
+            <div className="flex justify-between items-end mt-4">
+              <div className="space-y-1">
+                <div className="text-[10px] opacity-80 uppercase tracking-widest">Card Holder</div>
+                <div className="font-semibold text-base tracking-wide font-space-grotesk drop-shadow">
+                  {cardHolder}
                 </div>
-                <div>
-                  <div className="text-xs opacity-70 uppercase tracking-wider mb-1">Expires</div>
-                  <div className="font-semibold text-sm tracking-wider font-space-grotesk">
-                    {expiryDate}
-                  </div>
+              </div>
+              <div className="space-y-1 text-right">
+                <div className="text-[10px] opacity-80 uppercase tracking-widest">Expires</div>
+                <div className="font-semibold text-base tracking-wide font-space-grotesk drop-shadow">
+                  {expiryDate}
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Subtle pattern overlay */}
-          <div 
-            className="absolute inset-0 rounded-2xl opacity-10"
-            style={{
-              backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)',
-              backgroundSize: '30px 30px'
-            }}
-          />
         </div>
 
         {/* Back of Card */}
         <div
-          className={\`absolute w-full h-full rounded-2xl bg-gradient-to-br \${gradient} shadow-2xl backface-hidden\`}
+          className={\`absolute w-full h-full rounded-3xl shadow-2xl backface-hidden overflow-hidden \${
+            backgroundImage ? '' : \`bg-gradient-to-br \${gradient}\`
+          }\`}
           style={{ 
             backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)'
+            transform: 'rotateY(180deg)',
+            backgroundImage: backgroundImage ? \`url(\${backgroundImage})\` : undefined,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
           }}
         >
-          <div className="flex flex-col h-full text-white">
+          {/* Gradient Orbs */}
+          <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+
+          <div className="relative flex flex-col h-full text-white z-10">
             {/* Magnetic Stripe */}
-            <div className="w-full h-14 bg-black mt-6"></div>
+            <div className="w-full h-16 bg-black/80 mt-8"></div>
 
             {/* CVV Section */}
-            <div className="px-6 mt-6 space-y-4">
-              <div className="w-full h-12 bg-white/20 rounded flex items-center justify-end px-4">
-                <div className="bg-white text-black px-3 py-1 rounded font-jetbrains-mono font-semibold text-sm">
+            <div className="px-8 mt-8 space-y-4">
+              <div className="w-full h-12 bg-white/90 rounded-lg flex items-center justify-end px-5 backdrop-blur-sm">
+                <div className="bg-white text-black px-4 py-1.5 rounded font-jetbrains-mono font-bold text-sm italic tracking-wider">
                   {cvv}
                 </div>
               </div>
 
               {/* Signature Panel */}
-              <div className="w-full h-10 bg-white/10 rounded flex items-center px-3">
-                <div className="text-xs opacity-50 italic">Authorized Signature</div>
+              <div className="w-full h-11 bg-white/80 backdrop-blur-sm rounded-lg flex items-center px-4">
+                <div className="text-xs text-gray-700 italic font-semibold">Authorized Signature</div>
               </div>
 
-              {/* Info Text */}
-              <div className="text-[10px] opacity-40 leading-relaxed mt-4">
-                This card is property of the bank. If found, please return to any branch or call customer service. 
-                Unauthorized use is prohibited and punishable by law.
+              {/* Fine Print */}
+              <div className="text-[9px] leading-relaxed opacity-70 mt-6">
+                This card remains the property of the issuing bank. If found, please return to any branch. 
+                Unauthorized use is prohibited and subject to prosecution.
               </div>
             </div>
 
             {/* Card Brand on Back */}
-            <div className="mt-auto mb-6 px-6 flex justify-end">
+            <div className="mt-auto mb-8 px-8 flex justify-end">
               {cardBrandLogo ? (
-                <img src={cardBrandLogo} alt={cardBrand} className="h-8 object-contain opacity-80" />
+                <img src={cardBrandLogo} alt={cardBrand} className="h-8 object-contain opacity-80 drop-shadow-lg" />
               ) : (
-                <div className="text-lg font-bold tracking-wider opacity-60">{cardBrand}</div>
+                <div className="text-xl font-bold tracking-wider opacity-70 drop-shadow-lg">
+                  {cardBrand}
+                </div>
               )}
             </div>
           </div>
@@ -224,26 +264,40 @@ import CreditCard from "@/components/ui/CreditCard";
 export default function MyPage() {
   return (
     <CreditCard
-      cardNumber="1234 5678 9012 3456"
+      cardNumber="•••• •••• •••• 4567"
       cardHolder="JOHN DOE"
-      expiryDate="12/25"
+      expiryDate="02/28"
       cvv="123"
       cardBrand="VISA"
-      gradient="from-pink-500 via-purple-600 to-indigo-600"
+      gradient="from-[#667eea] via-[#764ba2] to-[#f093fb]"
     />
   );
 }
 \`\`\`
 
+### With Background Image
+
+\`\`\`tsx
+<CreditCard
+  cardNumber="•••• •••• •••• 4567"
+  cardHolder="JOHN DOE"
+  expiryDate="02/28"
+  cvv="123"
+  cardBrand="VISA"
+  backgroundImage="/card-texture.jpg"
+/>
+\`\`\`
+
 ### Props
 
-- \`cardNumber\` (string, optional): Card number with spaces (default: "1234 5678 9012 3456")
+- \`cardNumber\` (string, optional): Card number with spaces or bullets (default: "•••• •••• •••• 4567")
 - \`cardHolder\` (string, optional): Cardholder name in uppercase (default: "JOHN DOE")
-- \`expiryDate\` (string, optional): Expiry date MM/YY format (default: "12/25")
+- \`expiryDate\` (string, optional): Expiry date MM/YY format (default: "02/28")
 - \`cvv\` (string, optional): 3-digit CVV code on back (default: "123")
 - \`cardBrand\` (string, optional): Card brand text (default: "VISA")
 - \`cardBrandLogo\` (string, optional): URL to card brand logo image
-- \`gradient\` (string, optional): Tailwind gradient classes (default: "from-pink-500 via-purple-600 to-indigo-600")
+- \`backgroundImage\` (string, optional): Custom background image URL - overrides gradient
+- \`gradient\` (string, optional): Tailwind gradient classes (default: "from-[#667eea] via-[#764ba2] to-[#f093fb]")
 - \`scale\` (number, optional): Scale multiplier for component size (default: 1)
 - \`flipOnHover\` (boolean, optional): Flip on hover instead of click (default: false)
 
@@ -251,12 +305,14 @@ export default function MyPage() {
 
 - Smooth 3D flip animation (700ms)
 - Click to flip or hover mode
-- Realistic card design with chip, magnetic stripe
-- CVV panel on back with signature section
-- Customizable gradient background
-- Card brand logo support
-- Subtle pattern overlay
-- Pink accent colors matching Rangoli theme`,
+- Realistic gold chip design with grid pattern
+- Wave pattern overlay for depth
+- Gradient orbs for visual interest
+- Background image support
+- Beautiful default gradient (purple-pink)
+- Magnetic stripe and CVV panel on back
+- Drop shadows for 3D depth
+- Customizable everything`,
   },
   {
     id: "event-ticket",

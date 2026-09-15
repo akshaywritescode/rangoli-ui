@@ -13,14 +13,13 @@ interface ComponentPreviewProps {
 export function ComponentPreview({ component }: ComponentPreviewProps) {
   if (component.id === "credit-card") {
     return (
-      <div className="scale-75">
+      <div className="scale-[0.45]">
         <CreditCard
-          cardNumber="1234 5678 9012 3456"
+          cardNumber="•••• •••• •••• 3728"
           cardHolder="AKSHAY KUMAR"
-          expiryDate="12/27"
+          expiryDate="02/30"
           cvv="789"
-          cardBrand="RANGOLI"
-          gradient="from-pink-500 via-purple-600 to-pink-700"
+          cardBrand="VISA"
         />
       </div>
     );

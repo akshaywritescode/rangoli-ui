@@ -126,12 +126,12 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
 />`
   : component.id === 'credit-card'
   ? `<CreditCard
-  cardNumber="1234 5678 9012 3456"
-  cardHolder="AKSHAY KUMAR"
-  expiryDate="12/27"
-  cvv="789"
-  cardBrand="RANGOLI"
-  gradient="from-pink-500 via-purple-600 to-pink-700"
+  cardNumber="•••• •••• •••• 4567"
+  cardHolder="JOHN DOE"
+  expiryDate="02/28"
+  cvv="123"
+  cardBrand="VISA"
+  gradient="from-[#667eea] via-[#764ba2] to-[#f093fb]"
   scale={1}
   flipOnHover={false}
 />`
