@@ -892,4 +892,284 @@ export default function MyPage() {
 - Default SVG icons included as fallback
 - Adjustable size with scale prop`,
   },
+  {
+    id: "inline-confirm",
+    name: "Inline Confirm",
+    description: "A button that becomes its own inline confirmation dialog with undo",
+    category: "Buttons",
+    date: "2026-09-18",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/InlineConfirmBtn",
+    html: `"use client";
+
+import { useState, useEffect } from "react";
+import { Check, X, RotateCcw, Trash2 } from "lucide-react";
+
+interface InlineConfirmProps {
+  corner?: number;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  onUndo?: () => void;
+  label?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  undoLabel?: string;
+  undoTimeout?: number;
+  theme?: "light" | "dark";
+  className?: string;
+  scale?: number;
+}
+
+type Phase = "idle" | "asking" | "done";
+
+export default function InlineConfirmBtn({
+  corner = 20,
+  onConfirm,
+  onCancel,
+  onUndo,
+  label = "Delete",
+  confirmLabel = "Yes",
+  cancelLabel = "No",
+  undoLabel = "Undo",
+  undoTimeout = 3000,
+  theme = "dark",
+  className = "",
+  scale = 1,
+}: InlineConfirmProps) {
+  const [phase, setPhase] = useState<Phase>("idle");
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (phase === "done") {
+      const timer = setTimeout(() => {
+        setPhase("idle");
+      }, undoTimeout);
+
+      return () => clearTimeout(timer);
+    }
+  }, [phase, undoTimeout]);
+
+  const handleInitialClick = () => {
+    setPhase("asking");
+  };
+
+  const handleConfirm = () => {
+    setPhase("done");
+    setIsAnimating(true);
+    onConfirm?.();
+    setTimeout(() => setIsAnimating(false), 340);
+  };
+
+  const handleCancel = () => {
+    setPhase("idle");
+    onCancel?.();
+  };
+
+  const handleUndo = () => {
+    setPhase("idle");
+    onUndo?.();
+  };
+
+  // Theme-based colors
+  const bgColor = theme === "light" ? "bg-white" : "bg-zinc-900";
+  const textColor = theme === "light" ? "text-zinc-900" : "text-white";
+  const borderColor = theme === "light" ? "border-zinc-200" : "border-white/10";
+  const hoverBg = theme === "light" ? "hover:bg-zinc-100" : "hover:bg-white/5";
+  const dividerColor = theme === "light" ? "border-zinc-200" : "border-white/20";
+  const timerBg = theme === "light" ? "bg-zinc-300" : "bg-white/30";
+
+  return (
+    <div
+      className={\`inline-block \${className}\`}
+      style={{ transform: \`scale(\${scale})\`, transformOrigin: "center" }}
+    >
+      <div
+        className={\`shell relative overflow-hidden \${bgColor} \${textColor} border \${borderColor} font-medium shadow-lg hover:shadow-xl transition-all\`}
+        data-phase={phase}
+        style={{
+          borderRadius: \`\${corner}px\`,
+        }}
+      >
+        {/* Idle State */}
+        {phase === "idle" && (
+          <button
+            onClick={handleInitialClick}
+            className={\`w-full h-full px-4 py-2 flex items-center justify-center gap-1.5 transition-all \${hoverBg} text-sm\`}
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+            <span>{label}</span>
+          </button>
+        )}
+
+        {/* Asking State */}
+        {phase === "asking" && (
+          <div className="flex items-center h-full text-sm">
+            <button
+              onClick={handleConfirm}
+              className={\`flex-1 px-3 py-2 flex items-center justify-center gap-1.5 transition-colors border-r \${dividerColor} \${hoverBg}\`}
+            >
+              <Check className="w-3.5 h-3.5" />
+              <span>{confirmLabel}</span>
+            </button>
+            <button
+              onClick={handleCancel}
+              className={\`flex-1 px-3 py-2 flex items-center justify-center gap-1.5 transition-colors \${hoverBg}\`}
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>{cancelLabel}</span>
+            </button>
+          </div>
+        )}
+
+        {/* Done State with Undo */}
+        {phase === "done" && (
+          <div className="relative h-full">
+            <button
+              onClick={handleUndo}
+              className={\`w-full h-full px-4 py-2 flex items-center justify-center gap-1.5 transition-colors \${hoverBg} text-sm\`}
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>{undoLabel}</span>
+            </button>
+            
+            {/* Burn-down timer bar - thin line */}
+            <div
+              className={\`absolute bottom-0 left-0 h-[2px] \${timerBg}\`}
+              style={{
+                animation: \`burn \${undoTimeout}ms linear forwards\`,
+              }}
+            />
+          </div>
+        )}
+      </div>
+
+      <style jsx>{\`
+        .shell {
+          transition: width 340ms cubic-bezier(0.24, 1.34, 0.38, 1);
+        }
+
+        .shell[data-phase="idle"] {
+          width: 120px;
+        }
+
+        .shell[data-phase="asking"] {
+          width: 180px;
+        }
+
+        .shell[data-phase="done"] {
+          width: 160px;
+        }
+
+        @keyframes burn {
+          from {
+            width: 100%;
+          }
+          to {
+            width: 0;
+          }
+        }
+      \`}</style>
+    </div>
+  );
+}`,
+    css: `/* The button becomes its own dialog. Nothing opens over the
+   page, nothing shifts around it, and the choice stays under
+   the cursor that asked for it — a modal moves your attention
+   somewhere else to answer a question you just asked here.
+   Undo lives in the same footprint too, on a timer, so the
+   destructive path never needs a toast either. */
+
+/* the width is the animation */
+.shell { 
+  transition: width 340ms cubic-bezier(0.24, 1.34, 0.38, 1); 
+}
+
+.shell[data-phase="idle"]   { width: 120px; }
+.shell[data-phase="asking"] { width: 180px; }
+.shell[data-phase="done"]   { width: 160px; }
+
+/* how long undo is still on offer */
+@keyframes burn { 
+  from { width: 100%; } 
+  to { width: 0; } 
+}`,
+    usage: `## Usage
+
+The button becomes its own dialog. Nothing opens over the page, nothing shifts around it, and the choice stays under the cursor that asked for it. Undo lives in the same footprint too, on a timer, so the destructive path never needs a toast either.
+
+### Installation
+
+1. Install lucide-react if you haven't already:
+
+\`\`\`bash
+npm i lucide-react
+\`\`\`
+
+2. Copy the component code to your project: \`components/ui/InlineConfirmBtn.tsx\`
+
+### Basic Usage
+
+\`\`\`tsx
+import InlineConfirmBtn from "@/components/ui/InlineConfirmBtn";
+
+export default function MyPage() {
+  return (
+    <InlineConfirmBtn
+      corner={20}
+      onConfirm={() => console.log("Confirmed!")}
+      onCancel={() => console.log("Cancelled")}
+      onUndo={() => console.log("Undone")}
+    />
+  );
+}
+\`\`\`
+
+### With Custom Labels
+
+\`\`\`tsx
+<InlineConfirmBtn
+  label="Remove"
+  confirmLabel="Yes, remove"
+  cancelLabel="Cancel"
+  undoLabel="Undo removal"
+  corner={20}
+  undoTimeout={5000}
+  onConfirm={() => handleDelete()}
+/>
+\`\`\`
+
+### Props
+
+- \`corner\` (number, optional): Border radius in pixels, 0 to 22px (default: 20)
+- \`onConfirm\` (function, optional): Callback when user confirms the action
+- \`onCancel\` (function, optional): Callback when user cancels
+- \`onUndo\` (function, optional): Callback when user clicks undo
+- \`label\` (string, optional): Initial button label (default: "Delete")
+- \`confirmLabel\` (string, optional): Confirmation button label (default: "Yes")
+- \`cancelLabel\` (string, optional): Cancel button label (default: "No")
+- \`undoLabel\` (string, optional): Undo button label (default: "Undo")
+- \`undoTimeout\` (number, optional): Time in ms before undo disappears (default: 3000)
+- \`theme\` ('light' | 'dark', optional): Color theme (default: 'dark')
+- \`className\` (string, optional): Additional CSS classes for styling
+- \`scale\` (number, optional): Scale multiplier (default: 1, use 0.8 for 80%, 1.2 for 120%, etc.)
+
+### Features
+
+- Inline confirmation - no modals or toasts needed
+- Three states: idle → asking → done (with undo)
+- Smooth width animation using cubic-bezier easing
+- Visual countdown timer (thin 2px line) for undo window
+- Fully customizable labels and timing
+- Theme support (light/dark mode)
+- Compact size with clean design
+- Icons from lucide-react (Trash2, Check, X, RotateCcw)
+- Stays under the cursor - no attention shifting
+
+### State Flow
+
+1. **Idle**: Shows the initial button (e.g., "Delete")
+2. **Asking**: Expands to show "Yes" and "No" buttons side by side
+3. **Done**: Shows "Undo" with a countdown timer bar that burns down
+4. After timeout → returns to **Idle**`,
+  },
 ];

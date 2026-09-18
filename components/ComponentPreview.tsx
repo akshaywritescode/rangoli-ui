@@ -5,6 +5,7 @@ import MusicPlayer from "@/components/ui/MusicPlayer";
 import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
 import EventTicket from "@/components/ui/EventTicket";
 import CreditCard from "@/components/ui/CreditCard";
+import InlineConfirmBtn from "@/components/ui/InlineConfirmBtn";
 
 interface ComponentPreviewProps {
   component: Component;
@@ -57,6 +58,19 @@ export function ComponentPreview({ component }: ComponentPreviewProps) {
         <MusicPlayer 
           coverImage="https://static01.nyt.com/images/2021/02/11/arts/minari-anatomy2/11minari1-mediumSquareAt3X.jpg"
           audioSrc="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        />
+      </div>
+    );
+  }
+
+  if (component.id === "inline-confirm") {
+    return (
+      <div className="scale-100">
+        <InlineConfirmBtn
+          corner={20}
+          onConfirm={() => console.log("Confirmed!")}
+          onCancel={() => console.log("Cancelled")}
+          onUndo={() => console.log("Undone")}
         />
       </div>
     );
