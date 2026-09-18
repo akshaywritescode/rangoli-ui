@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useTheme } from "next-themes";
+import { Sun, Moon } from "lucide-react";
 import { Component } from "@/lib/components";
 import { ComponentPreview } from "./ComponentPreview";
 import { CodeBlock } from "./CodeBlock";
@@ -16,6 +18,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   const [activeTab, setActiveTab] = useState<"preview" | "setup" | "code">(
     "preview"
   );
+  const { theme, setTheme } = useTheme();
 
   const tabs = [
     { id: "preview", label: "Preview" },
@@ -26,27 +29,49 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   return (
     <div>
       {/* Tab Buttons */}
-      <div className="flex gap-2 border-b border-white/5 mb-10">
-        {tabs.map((tab) => (
+      <div className="flex items-center justify-between border-b border-white/5 mb-10">
+        <div className="flex gap-2">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-6 py-3.5 text-base font-semibold transition-all duration-200 border-b-2 font-space-grotesk ${
+                activeTab === tab.id
+                  ? "border-pink-500 text-white"
+                  : "border-transparent text-zinc-500 hover:text-zinc-300"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Theme Toggle - Only show on preview tab */}
+        {activeTab === "preview" && (
           <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`px-6 py-3.5 text-base font-semibold transition-all duration-200 border-b-2 font-space-grotesk ${
-              activeTab === tab.id
-                ? "border-pink-500 text-white"
-                : "border-transparent text-zinc-500 hover:text-zinc-300"
-            }`}
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="flex items-center gap-2 px-4 py-2 bg-zinc-900/50 hover:bg-zinc-800/50 border border-white/10 hover:border-white/20 rounded-lg text-sm font-medium text-zinc-300 hover:text-white transition-all duration-200"
           >
-            {tab.label}
+            {theme === "dark" ? (
+              <>
+                <Sun className="w-4 h-4" />
+                <span>Light</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-4 h-4" />
+                <span>Dark</span>
+              </>
+            )}
           </button>
-        ))}
+        )}
       </div>
 
       {/* Tab Content */}
       <div>
         {activeTab === "preview" && (
           <div className="relative">
-            <div className="relative bg-zinc-950/50 backdrop-blur-sm border border-white/10 rounded-2xl p-16 min-h-[400px] flex items-center justify-center">
+            <div className="relative bg-zinc-950/50 dark:bg-zinc-950/50 light:bg-white backdrop-blur-sm border border-white/10 dark:border-white/10 light:border-zinc-200 rounded-2xl p-16 min-h-[400px] flex items-center justify-center transition-colors duration-200">
               <ComponentPreview component={component} />
             </div>
           </div>

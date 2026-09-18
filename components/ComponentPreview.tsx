@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import { Component } from "@/lib/components";
 import MusicPlayer from "@/components/ui/MusicPlayer";
 import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
@@ -12,6 +13,8 @@ interface ComponentPreviewProps {
 }
 
 export function ComponentPreview({ component }: ComponentPreviewProps) {
+  const { theme } = useTheme();
+  
   if (component.id === "credit-card") {
     return (
       <div className="scale-[0.45]">
@@ -68,6 +71,7 @@ export function ComponentPreview({ component }: ComponentPreviewProps) {
       <div className="scale-100">
         <InlineConfirmBtn
           corner={20}
+          theme={theme as "light" | "dark"}
           onConfirm={() => console.log("Confirmed!")}
           onCancel={() => console.log("Cancelled")}
           onUndo={() => console.log("Undone")}
