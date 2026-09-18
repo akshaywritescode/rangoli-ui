@@ -27,6 +27,7 @@ export function ComponentPreview({ component, showThemeToggle = false }: Compone
             expiryDate="02/30"
             cvv="789"
             cardBrand="VISA"
+            theme={previewTheme}
           />
         </div>
       );

@@ -12,6 +12,7 @@ interface CreditCardProps {
   backgroundImage?: string;
   gradient?: string;
   flipOnHover?: boolean;
+  theme?: "light" | "dark";
   className?: string;
   scale?: number;
 }
@@ -24,12 +25,21 @@ export default function CreditCard({
   cardBrand = "VISA",
   cardBrandLogo,
   backgroundImage,
-  gradient = "from-zinc-900 via-zinc-800 to-zinc-900",
+  gradient,
   flipOnHover = false,
+  theme = "dark",
   className = "",
   scale = 1,
 }: CreditCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
+
+  // Set gradient based on theme if not explicitly provided
+  const cardGradient = gradient || (theme === "light" 
+    ? "from-slate-100 via-slate-200 to-slate-100" 
+    : "from-zinc-900 via-zinc-800 to-zinc-900");
+  
+  const textColor = theme === "light" ? "text-zinc-900" : "text-white";
+  const chipFilter = theme === "light" ? "" : "";
 
   const handleFlip = () => {
     if (!flipOnHover) {
@@ -73,7 +83,7 @@ export default function CreditCard({
         {/* Front of Card */}
         <div
           className={`absolute w-full h-full rounded-3xl shadow-2xl backface-hidden overflow-hidden ${
-            backgroundImage ? '' : `bg-gradient-to-br ${gradient}`
+            backgroundImage ? '' : `bg-gradient-to-br ${cardGradient}`
           }`}
           style={{ 
             backfaceVisibility: 'hidden',
@@ -99,7 +109,7 @@ export default function CreditCard({
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
 
-          <div className="relative flex flex-col justify-between h-full p-8 text-white z-10">
+          <div className={`relative flex flex-col justify-between h-full p-8 ${textColor} z-10`}>
             {/* Top Section: Chip & Logo */}
             <div className="flex justify-between items-start">
               {/* Realistic Chip */}
@@ -118,7 +128,7 @@ export default function CreditCard({
                 <img 
                   src="https://download.logo.wine/logo/Visa_Inc./Visa_Inc.-Logo.wine.png"
                   alt="VISA"
-                  className="h-14 object-contain drop-shadow-lg brightness-0 invert"
+                  className={`h-14 object-contain drop-shadow-lg ${theme === "dark" ? "brightness-0 invert" : ""}`}
                 />
               ) : (
                 <div className="text-3xl font-bold tracking-wider drop-shadow-lg opacity-90">
@@ -155,7 +165,7 @@ export default function CreditCard({
         {/* Back of Card */}
         <div
           className={`absolute w-full h-full rounded-3xl shadow-2xl backface-hidden overflow-hidden ${
-            backgroundImage ? '' : `bg-gradient-to-br ${gradient}`
+            backgroundImage ? '' : `bg-gradient-to-br ${cardGradient}`
           }`}
           style={{ 
             backfaceVisibility: 'hidden',
@@ -169,7 +179,7 @@ export default function CreditCard({
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
 
-          <div className="relative flex flex-col h-full text-white z-10">
+          <div className={`relative flex flex-col h-full ${textColor} z-10`}>
             {/* Magnetic Stripe */}
             <div className="w-full h-16 bg-black/80 mt-8"></div>
 
@@ -201,7 +211,7 @@ export default function CreditCard({
                 <img 
                   src="https://download.logo.wine/logo/Visa_Inc./Visa_Inc.-Logo.wine.png"
                   alt="VISA"
-                  className="h-10 object-contain opacity-80 drop-shadow-lg brightness-0 invert"
+                  className={`h-10 object-contain opacity-80 drop-shadow-lg ${theme === "dark" ? "brightness-0 invert" : ""}`}
                 />
               ) : (
                 <div className="text-2xl font-bold tracking-wider opacity-70 drop-shadow-lg">
