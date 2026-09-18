@@ -11,9 +11,10 @@ import InlineConfirmBtn from "@/components/ui/InlineConfirmBtn";
 
 interface ComponentPreviewProps {
   component: Component;
+  showThemeToggle?: boolean;
 }
 
-export function ComponentPreview({ component }: ComponentPreviewProps) {
+export function ComponentPreview({ component, showThemeToggle = false }: ComponentPreviewProps) {
   const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("dark");
 
   const renderComponent = () => {
@@ -85,6 +86,12 @@ export function ComponentPreview({ component }: ComponentPreviewProps) {
     return null;
   };
 
+  // If showThemeToggle is false, just render the component without the preview wrapper
+  if (!showThemeToggle) {
+    return renderComponent();
+  }
+
+  // Full preview with theme toggle
   return (
     <div className="relative">
       <div 

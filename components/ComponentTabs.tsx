@@ -45,7 +45,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
       {/* Tab Content */}
       <div>
         {activeTab === "preview" && (
-          <ComponentPreview component={component} />
+          <ComponentPreview component={component} showThemeToggle={true} />
         )}
 
         {activeTab === "setup" && (
