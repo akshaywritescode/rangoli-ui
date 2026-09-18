@@ -629,7 +629,7 @@ export default function AnimatedQRCode({
       <canvas ref={canvasRef} className="hidden" />
       
       <div 
-        className="relative bg-white rounded-2xl p-4"
+        className="relative bg-white rounded-2xl p-4 border border-zinc-200 shadow-xl"
         style={{ width: size + 32, height: size + 32 }}
       >
         <div className="relative" style={{ width: size, height: size }}>

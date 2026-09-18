@@ -93,7 +93,7 @@ export default function AnimatedQRCode({
       
       {/* Animated dots container */}
       <div 
-        className="relative bg-white rounded-2xl p-4"
+        className="relative bg-white rounded-2xl p-4 border border-zinc-200 shadow-xl"
         style={{ width: size + 32, height: size + 32 }}
       >
         <div className="relative" style={{ width: size, height: size }}>
