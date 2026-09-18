@@ -41,6 +41,7 @@ export function ComponentPreview({ component, showThemeToggle = false }: Compone
             holderName="Akshay"
             holderRole="Software Engineer"
             ticketId="APPLE-2024"
+            theme={previewTheme}
           />
         </div>
       );
