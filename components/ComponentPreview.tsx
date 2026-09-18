@@ -88,7 +88,7 @@ export function ComponentPreview({ component, showThemeToggle = false }: Compone
 
     if (component.id === "country-select") {
       return (
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-xs">
           <CountrySelect
             theme={previewTheme}
             placeholder="Select your country"

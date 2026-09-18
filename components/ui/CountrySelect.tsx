@@ -123,7 +123,7 @@ export default function CountrySelect({
   return (
     <div
       ref={containerRef}
-      className={`relative inline-block w-full max-w-sm ${className}`}
+      className={`relative inline-block w-full max-w-xs ${className}`}
       style={{ transform: `scale(${scale})`, transformOrigin: "center" }}
     >
       {/* Main Input */}
