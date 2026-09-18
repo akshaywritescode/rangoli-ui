@@ -58,7 +58,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                     <h3 className="text-lg font-semibold mb-2 text-white">Create the component file</h3>
                     <p className="text-zinc-400">
                       Copy the code from the Code tab and save it as <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">
-                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : component.id === 'credit-card' ? 'components/ui/CreditCard.tsx' : component.id === 'inline-confirm' ? 'components/ui/InlineConfirmBtn.tsx' : 'components/ui/MusicPlayer.tsx'}
+                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : component.id === 'credit-card' ? 'components/ui/CreditCard.tsx' : component.id === 'inline-confirm' ? 'components/ui/InlineConfirmBtn.tsx' : component.id === 'country-select' ? 'components/ui/CountrySelect.tsx' : 'components/ui/MusicPlayer.tsx'}
                       </code>
                     </p>
                   </div>
@@ -84,6 +84,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                           ? `import CreditCard from "@/components/ui/CreditCard";`
                           : component.id === 'inline-confirm'
                           ? `import InlineConfirmBtn from "@/components/ui/InlineConfirmBtn";`
+                          : component.id === 'country-select'
+                          ? `import CountrySelect from "@/components/ui/CountrySelect";`
                           : `import MusicPlayer from "@/components/ui/MusicPlayer";`
                         }
                       </SyntaxHighlighter>
@@ -139,6 +141,13 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   onCancel={() => console.log("Cancelled")}
   onUndo={() => console.log("Undone")}
 />`
+  : component.id === 'country-select'
+  ? `<CountrySelect
+  value={country}
+  onChange={setCountry}
+  placeholder="Select your country"
+  theme="dark"
+/>`
   : `<MusicPlayer 
   coverImage="/path/to/cover.jpg" 
   audioSrc="/path/to/audio.mp3"
@@ -160,6 +169,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                         : component.id === 'credit-card'
                         ? 'Default gradient background included. Add the 3D transform CSS utilities to your globals.css (see usage docs)'
                         : component.id === 'inline-confirm'
+                        ? 'Install lucide-react: npm i lucide-react'
+                        : component.id === 'country-select'
                         ? 'Install lucide-react: npm i lucide-react'
                         : 'No additional assets required - default play/pause icons are included. Optionally pass custom icons via props (Lucide React, images, etc.)'
                       }

@@ -1172,4 +1172,119 @@ export default function MyPage() {
 3. **Done**: Shows "Undo" with a countdown timer bar that burns down
 4. After timeout → returns to **Idle**`,
   },
+  {
+    id: "country-select",
+    name: "Country Select",
+    description: "Searchable country selector with flags and smooth animations",
+    category: "Forms",
+    date: "2026-09-18",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/CountrySelect",
+    html: `"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { Search, ChevronDown, X } from "lucide-react";
+
+interface Country {
+  name: string;
+  code: string;
+  flag: string;
+}
+
+interface CountrySelectProps {
+  value?: Country | null;
+  onChange?: (country: Country | null) => void;
+  placeholder?: string;
+  theme?: "light" | "dark";
+  className?: string;
+  scale?: number;
+}
+
+export default function CountrySelect({
+  value,
+  onChange,
+  placeholder = "Select a country",
+  theme = "dark",
+  className = "",
+  scale = 1,
+}: CountrySelectProps) {
+  // Component implementation
+  // (See full code in component file)
+}`,
+    css: `// All styles are built into the component using Tailwind CSS`,
+    usage: `## Usage
+
+A searchable country selector with emoji flags, smooth animations, and theme support.
+
+### Installation
+
+1. Install lucide-react if you haven't already:
+
+\`\`\`bash
+npm i lucide-react
+\`\`\`
+
+2. Copy the component code to your project: \`components/ui/CountrySelect.tsx\`
+
+### Basic Usage
+
+\`\`\`tsx
+import CountrySelect from "@/components/ui/CountrySelect";
+
+export default function MyPage() {
+  const [country, setCountry] = useState(null);
+
+  return (
+    <CountrySelect
+      value={country}
+      onChange={setCountry}
+      placeholder="Select your country"
+    />
+  );
+}
+\`\`\`
+
+### With Theme
+
+\`\`\`tsx
+<CountrySelect
+  value={country}
+  onChange={setCountry}
+  theme="light"
+  placeholder="Choose a country"
+/>
+\`\`\`
+
+### Props
+
+- \`value\` (Country | null, optional): Currently selected country object
+- \`onChange\` (function, optional): Callback when country selection changes
+- \`placeholder\` (string, optional): Placeholder text (default: "Select a country")
+- \`theme\` ('light' | 'dark', optional): Color theme (default: 'dark')
+- \`className\` (string, optional): Additional CSS classes
+- \`scale\` (number, optional): Scale multiplier (default: 1)
+
+### Country Object
+
+\`\`\`typescript
+{
+  name: string;    // "United States"
+  code: string;    // "US"
+  flag: string;    // "🇺🇸"
+}
+\`\`\`
+
+### Features
+
+- Searchable dropdown with real-time filtering
+- 35+ countries with emoji flags
+- Click outside to close
+- Clear selection button
+- Smooth animations and transitions
+- Theme support (light/dark mode)
+- Keyboard accessible
+- Focus management
+- Responsive design
+- Clean, modern UI`,
+  },
 ];
