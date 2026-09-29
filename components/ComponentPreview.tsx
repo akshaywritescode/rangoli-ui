@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { Component } from "@/lib/components";
+import ShimmerText from "@/components/ui/ShimmerText";
 import MusicPlayer from "@/components/ui/MusicPlayer";
 import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
 import EventTicket from "@/components/ui/EventTicket";
@@ -18,6 +19,15 @@ export function ComponentPreview({ component, showThemeToggle = false }: Compone
   const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("dark");
 
   const renderComponent = () => {
+    if (component.id === "shimmer-text") {
+      return (
+        <ShimmerText
+          text="Planning next moves"
+          theme={previewTheme}
+        />
+      );
+    }
+
     if (component.id === "credit-card") {
       return (
         <div className="scale-[0.45]">

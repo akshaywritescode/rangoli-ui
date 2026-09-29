@@ -9,7 +9,7 @@ import dynamic from "next/dynamic";
 
 const Dither = dynamic(() => import("@/components/Dither"), { ssr: false });
 
-const categories = ["All", "Buttons", "Cards", "Forms", "Navigation", "Effects", "AI Components"];
+const categories = ["All", "AI Components", "Buttons", "Cards", "Forms", "Navigation", "Effects"];
 
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState("All");

@@ -14,6 +14,169 @@ export interface Component {
 
 export const components: Component[] = [
   {
+    id: "shimmer-text",
+    name: "Shimmer Text",
+    description: "Masked gradient sweep across text — perfect for AI thinking and loading states",
+    category: "AI Components",
+    date: "2026-09-29",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/ShimmerText",
+    html: `"use client";
+
+interface ShimmerTextProps {
+  text?: string;
+  duration?: number;
+  base?: string;
+  highlight?: string;
+  className?: string;
+  scale?: number;
+  theme?: "light" | "dark";
+}
+
+export default function ShimmerText({
+  text = "Planning next moves",
+  duration = 2000,
+  base,
+  highlight,
+  className = "",
+  scale = 1,
+  theme = "dark",
+}: ShimmerTextProps) {
+  const defaultBase = theme === "dark" ? "#7c7c7c" : "#a0a0a0";
+  const defaultHighlight = theme === "dark" ? "#ffffff" : "#000000";
+
+  const shimmerBase = base || defaultBase;
+  const shimmerHighlight = highlight || defaultHighlight;
+
+  return (
+    <span
+      className={\`relative inline-block text-2xl font-medium \${className}\`}
+      style={{
+        transform: \`scale(\${scale})\`,
+        transformOrigin: "center",
+        "--shimmer-dur": \`\${duration}ms\`,
+        "--shimmer-base": shimmerBase,
+        "--shimmer-highlight": shimmerHighlight,
+        "--shimmer-band": "400%",
+        "--shimmer-ease": "linear",
+      } as React.CSSProperties}
+    >
+      <span className="t-shimmer" data-text={text}>
+        {text}
+      </span>
+    </span>
+  );
+}`,
+    css: `/* Two-layer construction:
+   1. The base text renders in --shimmer-base.
+   2. ::before duplicates it via content: attr(data-text),
+      paints a transparent → highlight → transparent gradient
+      onto it, and clips that gradient to the glyphs.
+      Animating background-position sweeps the band across. */
+
+:root {
+  --shimmer-dur: 2000ms;
+  --shimmer-base: #7c7c7c;
+  --shimmer-highlight: #ffffff;
+  --shimmer-band: 400%;
+  --shimmer-ease: linear;
+}
+
+.t-shimmer {
+  position: relative;
+  display: inline-block;
+  color: var(--shimmer-base);
+}
+
+.t-shimmer::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    transparent          0%,
+    transparent         40%,
+    var(--shimmer-highlight) 50%,
+    transparent         60%,
+    transparent        100%
+  );
+  background-size: var(--shimmer-band) 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: t-shimmer var(--shimmer-dur) var(--shimmer-ease) infinite;
+}
+
+@keyframes t-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-shimmer::before { animation: none !important; }
+}`,
+    usage: `## Usage
+
+A loading / "thinking" label that shimmers — perfect for streaming status, "Generating…", or any in-progress copy that should feel alive without a spinner. Pure CSS under the hood.
+
+### Installation
+
+Copy the component code to your project: \`components/ui/ShimmerText.tsx\`
+
+### Basic Usage
+
+\`\`\`tsx
+import ShimmerText from "@/components/ui/ShimmerText";
+
+export default function MyPage() {
+  return (
+    <ShimmerText text="Planning next moves" />
+  );
+}
+\`\`\`
+
+### With Custom Colors
+
+\`\`\`tsx
+<ShimmerText
+  text="Generating response..."
+  base="#6b7280"
+  highlight="#ffffff"
+  duration={1500}
+/>
+\`\`\`
+
+### Light Theme
+
+\`\`\`tsx
+<ShimmerText
+  text="Thinking..."
+  theme="light"
+/>
+\`\`\`
+
+### Props
+
+- \`text\` (string, optional): The text to shimmer (default: "Planning next moves")
+- \`duration\` (number, optional): Animation duration in ms (default: 2000)
+- \`base\` (string, optional): Base text color — overrides theme default
+- \`highlight\` (string, optional): Shimmer highlight color — overrides theme default
+- \`theme\` ('light' | 'dark', optional): Sets default colors per theme (default: 'dark')
+- \`className\` (string, optional): Additional CSS classes
+- \`scale\` (number, optional): Scale multiplier (default: 1)
+
+### How it works
+
+Two-layer construction — the base text renders in \`--shimmer-base\`. A \`::before\` pseudo-element duplicates it via \`content: attr(data-text)\`, paints a transparent → highlight → transparent gradient clipped to the glyphs, and animates \`background-position\` to sweep the band across.
+
+### Accessibility
+
+Includes \`@media (prefers-reduced-motion: reduce)\` guard — the animation stops for users who have requested less motion at the OS level.`,
+  },
+  {
     id: "credit-card",
     name: "Credit Card",
     description: "3D flip credit/debit card with front and back",

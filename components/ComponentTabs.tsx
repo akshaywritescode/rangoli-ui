@@ -58,7 +58,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                     <h3 className="text-lg font-semibold mb-2 text-white">Create the component file</h3>
                     <p className="text-zinc-400">
                       Copy the code from the Code tab and save it as <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">
-                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : component.id === 'credit-card' ? 'components/ui/CreditCard.tsx' : component.id === 'inline-confirm' ? 'components/ui/InlineConfirmBtn.tsx' : 'components/ui/MusicPlayer.tsx'}
+                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : component.id === 'credit-card' ? 'components/ui/CreditCard.tsx' : component.id === 'inline-confirm' ? 'components/ui/InlineConfirmBtn.tsx' : component.id === 'shimmer-text' ? 'components/ui/ShimmerText.tsx' : 'components/ui/MusicPlayer.tsx'}
                       </code>
                     </p>
                   </div>
@@ -84,6 +84,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                           ? `import CreditCard from "@/components/ui/CreditCard";`
                           : component.id === 'inline-confirm'
                           ? `import InlineConfirmBtn from "@/components/ui/InlineConfirmBtn";`
+                          : component.id === 'shimmer-text'
+                          ? `import ShimmerText from "@/components/ui/ShimmerText";`
                           : `import MusicPlayer from "@/components/ui/MusicPlayer";`
                         }
                       </SyntaxHighlighter>
@@ -132,6 +134,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   scale={1}
   flipOnHover={false}
 />`
+  : component.id === 'shimmer-text'
+  ? `<ShimmerText text="Planning next moves" theme="dark" />`
   : component.id === 'inline-confirm'
   ? `<InlineConfirmBtn
   corner={20}
@@ -159,6 +163,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                         ? 'Optional: Add event logo to your public folder'
                         : component.id === 'credit-card'
                         ? 'Default gradient background included. Add the 3D transform CSS utilities to your globals.css (see usage docs)'
+                        : component.id === 'shimmer-text'
+                        ? 'No additional dependencies required — pure CSS animation'
                         : component.id === 'inline-confirm'
                         ? 'Install lucide-react: npm i lucide-react'
                         : 'No additional assets required - default play/pause icons are included. Optionally pass custom icons via props (Lucide React, images, etc.)'
