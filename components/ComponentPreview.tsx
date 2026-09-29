@@ -5,6 +5,7 @@ import { Sun, Moon } from "lucide-react";
 import { Component } from "@/lib/components";
 import ShimmerText from "@/components/ui/ShimmerText";
 import ThinkingStates from "@/components/ui/ThinkingStates";
+import StreamingText from "@/components/ui/StreamingText";
 import MusicPlayer from "@/components/ui/MusicPlayer";
 import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
 import EventTicket from "@/components/ui/EventTicket";
@@ -34,6 +35,21 @@ export function ComponentPreview({ component, showThemeToggle = false }: Compone
         <ThinkingStates
           theme={previewTheme}
         />
+      );
+    }
+
+    if (component.id === "streaming-text") {
+      const isCard = !showThemeToggle;
+      return (
+        <div className={`${isCard ? "w-full px-2 text-xs leading-relaxed" : "w-full px-8 text-sm leading-relaxed"}`}>
+          <StreamingText
+            text={isCard
+              ? "Words resolve through a soft cross-blur as they stream in one by one from the model. This effect is perfect for AI responses and chat interfaces where text arrives progressively. Each word fades in with a gentle blur transition, creating a natural reading flow that mirrors how language models actually generate text."
+              : "Words resolve through a soft cross-blur as they stream in one by one from the model. This streaming effect is perfect for AI responses, chat interfaces, or any text that arrives progressively and needs to feel alive. Each word fades in with a gentle blur transition, creating a natural reading flow that mirrors how language models actually generate text."
+            }
+            theme={previewTheme}
+          />
+        </div>
       );
     }
 

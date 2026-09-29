@@ -296,6 +296,126 @@ A hidden sizer span holds the longest state to keep the container width stable. 
 Includes \`@media (prefers-reduced-motion: reduce)\` guard and \`role="status"\` on the live text.`,
   },
   {
+    id: "streaming-text",
+    name: "Streaming Text",
+    description: "Words resolve through a soft cross-blur as they stream in one by one",
+    category: "AI Components",
+    date: "2026-09-29",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/StreamingText",
+    html: `"use client";
+
+import { useState, useEffect, useRef, useCallback } from "react";
+
+interface StreamingTextProps {
+  text?: string;
+  gap?: number;
+  fade?: number;
+  blur?: number;
+  autoPlay?: boolean;
+  loop?: boolean;
+  loopDelay?: number;
+  theme?: "light" | "dark";
+  className?: string;
+  scale?: number;
+}
+
+export default function StreamingText({
+  text = "Words resolve through a soft cross-blur as they stream in one by one from the model.",
+  gap = 60,
+  fade = 350,
+  blur = 1,
+  autoPlay = true,
+  loop = true,
+  loopDelay = 1500,
+  theme = "dark",
+  className = "",
+  scale = 1,
+}: StreamingTextProps) {
+  // See full implementation in component file
+}`,
+    css: `.stream-word {
+  display: inline;
+  opacity: 0;
+  filter: blur(var(--sw-blur));
+  transition:
+    opacity var(--sw-fade) cubic-bezier(0.22, 1, 0.36, 1),
+    filter  var(--sw-fade) cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stream-word.is-in {
+  opacity: 1;
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .stream-word {
+    transition: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+}`,
+    usage: `## Usage
+
+Words resolve through a soft cross-blur as they stream in one by one from the model — perfect for AI responses, chat interfaces, or any text that arrives progressively.
+
+### Installation
+
+Copy the component to your project: \`components/ui/StreamingText.tsx\`
+
+### Basic Usage
+
+\`\`\`tsx
+import StreamingText from "@/components/ui/StreamingText";
+
+export default function MyPage() {
+  return (
+    <StreamingText text="Your text streams in word by word" />
+  );
+}
+\`\`\`
+
+### Custom Timing
+
+\`\`\`tsx
+<StreamingText
+  text="Slower streaming with longer fade"
+  gap={100}
+  fade={500}
+  blur={2}
+/>
+\`\`\`
+
+### Without Loop
+
+\`\`\`tsx
+<StreamingText
+  text="This plays once and stops"
+  loop={false}
+  autoPlay={true}
+/>
+\`\`\`
+
+### Props
+
+- \`text\` (string, optional): The text to stream (default: demo sentence)
+- \`gap\` (number, optional): Time in ms between each word (default: 60)
+- \`fade\` (number, optional): Duration of blur/opacity transition in ms (default: 350)
+- \`blur\` (number, optional): Blur amount in px during transition (default: 1)
+- \`autoPlay\` (boolean, optional): Start streaming on mount (default: true)
+- \`loop\` (boolean, optional): Restart after completion (default: true)
+- \`loopDelay\` (number, optional): Delay in ms before restarting (default: 1500)
+- \`theme\` ('light' | 'dark', optional): Color theme (default: 'dark')
+- \`className\` (string, optional): Additional CSS classes
+- \`scale\` (number, optional): Scale multiplier (default: 1)
+
+### How it works
+
+Each word is wrapped in a span with \`opacity: 0\` and \`blur()\`. Words become visible one by one with staggered timing (\`gap\` milliseconds apart). The transition uses a smooth cubic-bezier easing for a natural reveal.
+
+### Accessibility
+
+Includes \`@media (prefers-reduced-motion: reduce)\` guard that instantly shows all text without animation for users who prefer reduced motion.`,
+  },
+  {
     id: "credit-card",
     name: "Credit Card",
     description: "3D flip credit/debit card with front and back",
