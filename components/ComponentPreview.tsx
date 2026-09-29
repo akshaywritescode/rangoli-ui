@@ -5,6 +5,8 @@ import { Sun, Moon } from "lucide-react";
 import { Component } from "@/lib/components";
 import ShimmerText from "@/components/ui/ShimmerText";
 import ThinkingStates from "@/components/ui/ThinkingStates";
+import ThinkingDotLoader from "@/components/ui/ThinkingDotLoader";
+import FeedbackBar from "@/components/ui/FeedbackBar";
 import StreamingText from "@/components/ui/StreamingText";
 import MusicPlayer from "@/components/ui/MusicPlayer";
 import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
@@ -27,6 +29,24 @@ export function ComponentPreview({ component, showThemeToggle = false }: Compone
           text="Planning next moves"
           theme={previewTheme}
         />
+      );
+    }
+
+    if (component.id === "feedback-bar") {
+      return (
+        <FeedbackBar
+          title="Was this response helpful?"
+          theme={previewTheme}
+        />
+      );
+    }
+
+    if (component.id === "thinking-dot-loader") {
+      return (
+        <div className="flex items-center gap-4">
+          <ThinkingDotLoader variant="scan" theme={previewTheme} dotSize={3} gap={3} />
+          <ThinkingStates theme={previewTheme} />
+        </div>
       );
     }
 

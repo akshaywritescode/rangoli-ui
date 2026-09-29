@@ -58,7 +58,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                     <h3 className="text-lg font-semibold mb-2 text-white">Create the component file</h3>
                     <p className="text-zinc-400">
                       Copy the code from the Code tab and save it as <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">
-                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : component.id === 'credit-card' ? 'components/ui/CreditCard.tsx' : component.id === 'inline-confirm' ? 'components/ui/InlineConfirmBtn.tsx' : component.id === 'shimmer-text' ? 'components/ui/ShimmerText.tsx' : component.id === 'thinking-states' ? 'components/ui/ThinkingStates.tsx' : component.id === 'streaming-text' ? 'components/ui/StreamingText.tsx' : 'components/ui/MusicPlayer.tsx'}
+                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : component.id === 'credit-card' ? 'components/ui/CreditCard.tsx' : component.id === 'inline-confirm' ? 'components/ui/InlineConfirmBtn.tsx' : component.id === 'feedback-bar' ? 'components/ui/FeedbackBar.tsx' : component.id === 'shimmer-text' ? 'components/ui/ShimmerText.tsx' : component.id === 'thinking-dot-loader' ? 'components/ui/ThinkingDotLoader.tsx' : component.id === 'thinking-states' ? 'components/ui/ThinkingStates.tsx' : component.id === 'streaming-text' ? 'components/ui/StreamingText.tsx' : 'components/ui/MusicPlayer.tsx'}
                       </code>
                     </p>
                   </div>
@@ -84,8 +84,12 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                           ? `import CreditCard from "@/components/ui/CreditCard";`
                           : component.id === 'inline-confirm'
                           ? `import InlineConfirmBtn from "@/components/ui/InlineConfirmBtn";`
+                          : component.id === 'feedback-bar'
+                          ? `import FeedbackBar from "@/components/ui/FeedbackBar";`
                           : component.id === 'shimmer-text'
                           ? `import ShimmerText from "@/components/ui/ShimmerText";`
+                          : component.id === 'thinking-dot-loader'
+                          ? `import ThinkingDotLoader from "@/components/ui/ThinkingDotLoader";`
                           : component.id === 'thinking-states'
                           ? `import ThinkingStates from "@/components/ui/ThinkingStates";`
                           : component.id === 'streaming-text'
@@ -140,6 +144,11 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
 />`
   : component.id === 'shimmer-text'
   ? `<ShimmerText text="Planning next moves" theme="dark" />`
+  : component.id === 'thinking-dot-loader'
+  ? `<div className="flex items-center gap-3">
+  <ThinkingDotLoader variant="scan" />
+  <ThinkingStates />
+</div>`
   : component.id === 'thinking-states'
   ? `<ThinkingStates theme="dark" />`
   : component.id === 'streaming-text'
@@ -153,6 +162,13 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   onConfirm={() => console.log("Confirmed!")}
   onCancel={() => console.log("Cancelled")}
   onUndo={() => console.log("Undone")}
+/>`
+  : component.id === 'feedback-bar'
+  ? `<FeedbackBar
+  title="Was this response helpful?"
+  onHelpful={() => console.log("helpful")}
+  onNotHelpful={() => console.log("not helpful")}
+  onClose={() => console.log("closed")}
 />`
   : `<MusicPlayer 
   coverImage="/path/to/cover.jpg" 
@@ -176,11 +192,15 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                         ? 'Default gradient background included. Add the 3D transform CSS utilities to your globals.css (see usage docs)'
                         : component.id === 'shimmer-text'
                         ? 'No additional dependencies required — pure CSS animation'
+                        : component.id === 'thinking-dot-loader'
+                        ? 'No additional dependencies required — pure CSS animation with React'
                         : component.id === 'thinking-states'
                         ? 'No additional dependencies required — pure CSS animation with React state'
                         : component.id === 'streaming-text'
                         ? 'No additional dependencies required — pure CSS animation with React state'
                         : component.id === 'inline-confirm'
+                        ? 'Install lucide-react: npm i lucide-react'
+                        : component.id === 'feedback-bar'
                         ? 'Install lucide-react: npm i lucide-react'
                         : 'No additional assets required - default play/pause icons are included. Optionally pass custom icons via props (Lucide React, images, etc.)'
                       }

@@ -177,6 +177,239 @@ Two-layer construction — the base text renders in \`--shimmer-base\`. A \`::be
 Includes \`@media (prefers-reduced-motion: reduce)\` guard — the animation stops for users who have requested less motion at the OS level.`,
   },
   {
+    id: "feedback-bar",
+    name: "Feedback Bar",
+    description: "Collect thumbs up / down feedback on AI responses",
+    category: "AI Components",
+    date: "2026-09-29",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/FeedbackBar",
+    html: `"use client";
+
+import { useState } from "react";
+import { ThumbsUp, ThumbsDown, X } from "lucide-react";
+
+interface FeedbackBarProps {
+  title?: string;
+  icon?: React.ReactNode;
+  onHelpful?: () => void;
+  onNotHelpful?: () => void;
+  onClose?: () => void;
+  theme?: "light" | "dark";
+  className?: string;
+  scale?: number;
+}
+
+export default function FeedbackBar({
+  title = "Was this response helpful?",
+  icon,
+  onHelpful,
+  onNotHelpful,
+  onClose,
+  theme = "dark",
+  className = "",
+  scale = 1,
+}: FeedbackBarProps) {
+  // See full implementation in component file
+}`,
+    css: `/* No separate CSS needed — all Tailwind */`,
+    usage: `## Usage
+
+A compact bar that asks the user whether an AI response was helpful. Thumbs up lights green, thumbs down lights red, and the close button dismisses it.
+
+### Installation
+
+1. Install lucide-react if you haven't already:
+
+\`\`\`bash
+npm i lucide-react
+\`\`\`
+
+2. Copy the component to your project: \`components/ui/FeedbackBar.tsx\`
+
+### Basic Usage
+
+\`\`\`tsx
+import FeedbackBar from "@/components/ui/FeedbackBar";
+
+export default function MyPage() {
+  return (
+    <FeedbackBar
+      title="Was this response helpful?"
+      onHelpful={() => console.log("helpful")}
+      onNotHelpful={() => console.log("not helpful")}
+      onClose={() => console.log("closed")}
+    />
+  );
+}
+\`\`\`
+
+### With Icon
+
+\`\`\`tsx
+import { Info } from "lucide-react";
+
+<FeedbackBar
+  title="Was this response helpful?"
+  icon={<Info className="size-4" />}
+  onHelpful={() => sendFeedback("helpful")}
+  onNotHelpful={() => sendFeedback("not-helpful")}
+  onClose={() => hideFeedback()}
+/>
+\`\`\`
+
+### Props
+
+- \`title\` (string, optional): The question to display (default: "Was this response helpful?")
+- \`icon\` (ReactNode, optional): Icon shown to the left of the title
+- \`onHelpful\` (() => void, optional): Callback when thumbs up is clicked
+- \`onNotHelpful\` (() => void, optional): Callback when thumbs down is clicked
+- \`onClose\` (() => void, optional): Callback when the close button is clicked
+- \`theme\` ('light' | 'dark', optional): Color theme (default: 'dark')
+- \`className\` (string, optional): Additional CSS classes
+- \`scale\` (number, optional): Scale multiplier (default: 1)
+
+### Features
+
+- Three interactive states: idle, helpful (green thumb), not helpful (red thumb)
+- Close button dismisses the bar
+- Smooth color transitions on interaction
+- Accessible — aria-label and aria-pressed on all buttons
+- Theme support (light/dark)`,
+  },
+  {
+    id: "thinking-dot-loader",
+    name: "Thinking Dot Loader",
+    description: "4×4 matrix of dots that pulse with scan, twinkle, orbit or pulse patterns",
+    category: "AI Components",
+    date: "2026-09-29",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/ThinkingDotLoader",
+    html: `"use client";
+
+type Variant = "scan" | "twinkle" | "orbit" | "pulse" | "rounded-scan" | "rounded-twinkle";
+
+interface ThinkingDotLoaderProps {
+  variant?: Variant;
+  cycle?: number;
+  base?: string;
+  active?: string;
+  dotSize?: number;
+  gap?: number;
+  theme?: "light" | "dark";
+  className?: string;
+  scale?: number;
+}
+
+export default function ThinkingDotLoader({
+  variant = "scan",
+  cycle = 1200,
+  base,
+  active,
+  dotSize = 2,
+  gap = 2,
+  theme = "dark",
+  className = "",
+  scale = 1,
+}: ThinkingDotLoaderProps) {
+  // See full implementation in component file
+}`,
+    css: `:root {
+  --matrix-cycle: 1200ms;
+  --matrix-base: #3a3a3e;
+  --matrix-active: #b8b8c2;
+  --matrix-ease: ease-in-out;
+}
+
+.t-matrix {
+  display: grid;
+  grid-template-columns: repeat(4, 2px);
+  grid-auto-rows: 2px;
+  gap: 2px;
+}
+
+.t-matrix i {
+  display: block;
+  background: var(--matrix-base);
+  animation: t-matrix-pulse var(--matrix-cycle) var(--matrix-ease) infinite;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+
+.t-matrix i.is-gap { visibility: hidden; animation: none; }
+
+@keyframes t-matrix-pulse {
+  0%, 45%, 100% { background-color: var(--matrix-base); }
+  15%           { background-color: var(--matrix-active); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-matrix i { animation: none !important; }
+}`,
+    usage: `## Usage
+
+A 4×4 matrix of dots that colour-pulse through configurable delay patterns — scan, twinkle, orbit, pulse — perfect as a compact AI thinking indicator.
+
+### Installation
+
+Copy the component to your project: \`components/ui/ThinkingDotLoader.tsx\`
+
+### Basic Usage
+
+\`\`\`tsx
+import ThinkingDotLoader from "@/components/ui/ThinkingDotLoader";
+
+export default function MyPage() {
+  return (
+    <ThinkingDotLoader />
+  );
+}
+\`\`\`
+
+### All Variants
+
+\`\`\`tsx
+<ThinkingDotLoader variant="scan" />
+<ThinkingDotLoader variant="twinkle" />
+<ThinkingDotLoader variant="orbit" />
+<ThinkingDotLoader variant="pulse" />
+<ThinkingDotLoader variant="rounded-scan" />
+<ThinkingDotLoader variant="rounded-twinkle" />
+\`\`\`
+
+### With Thinking States
+
+\`\`\`tsx
+<div className="flex items-center gap-3">
+  <ThinkingDotLoader variant="scan" />
+  <ThinkingStates />
+</div>
+\`\`\`
+
+### Props
+
+- \`variant\` ('scan' | 'twinkle' | 'orbit' | 'pulse' | 'rounded-scan' | 'rounded-twinkle', optional): Animation pattern (default: 'scan')
+- \`cycle\` (number, optional): Total animation cycle duration in ms (default: 1200)
+- \`base\` (string, optional): Dot resting colour — overrides theme default
+- \`active\` (string, optional): Dot highlight colour — overrides theme default
+- \`dotSize\` (number, optional): Size of each dot in px (default: 2)
+- \`gap\` (number, optional): Gap between dots in px (default: 2)
+- \`theme\` ('light' | 'dark', optional): Sets default colours (default: 'dark')
+- \`className\` (string, optional): Additional CSS classes
+- \`scale\` (number, optional): Scale multiplier (default: 1)
+
+### Variant Patterns
+
+- **scan**: Columns light up left-to-right in sequence
+- **twinkle**: Dots activate in a pseudo-random order for a starfield effect
+- **orbit**: The outer ring pulses clockwise; centre dots hold steady
+- **pulse**: Inner 2×2 core pulses first, outer ring follows slightly behind
+- **rounded-scan / rounded-twinkle**: Corner dots are hidden, giving a rounded silhouette
+
+### Accessibility
+
+Includes \`@media (prefers-reduced-motion: reduce)\` guard — all animations stop for users who prefer less motion.`,
+  },
+  {
     id: "thinking-states",
     name: "Thinking States",
     description: "AI status line that shimmers while thinking and swaps states with blur transitions",
