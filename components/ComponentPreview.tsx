@@ -8,7 +8,6 @@ import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
 import EventTicket from "@/components/ui/EventTicket";
 import CreditCard from "@/components/ui/CreditCard";
 import InlineConfirmBtn from "@/components/ui/InlineConfirmBtn";
-import CountrySelect from "@/components/ui/CountrySelect";
 
 interface ComponentPreviewProps {
   component: Component;
@@ -81,18 +80,6 @@ export function ComponentPreview({ component, showThemeToggle = false }: Compone
             onConfirm={() => console.log("Confirmed!")}
             onCancel={() => console.log("Cancelled")}
             onUndo={() => console.log("Undone")}
-          />
-        </div>
-      );
-    }
-
-    if (component.id === "country-select") {
-      return (
-        <div className="w-full max-w-xs">
-          <CountrySelect
-            theme={previewTheme}
-            placeholder="Select your country"
-            onChange={(country) => console.log("Selected:", country)}
           />
         </div>
       );

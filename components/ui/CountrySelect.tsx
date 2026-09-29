@@ -81,33 +81,43 @@ export default function CountrySelect({
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setIsOpen(false);
-        setSearchQuery("");
+        if (!selectedCountry) {
+          setSearchQuery("");
+        }
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Focus input when dropdown opens
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
+  }, [selectedCountry]);
 
   const handleSelect = (country: Country) => {
     setSelectedCountry(country);
+    setSearchQuery(country.name);
     onChange?.(country);
     setIsOpen(false);
-    setSearchQuery("");
   };
 
   const handleClear = (e: React.MouseEvent) => {
     e.stopPropagation();
     setSelectedCountry(null);
-    onChange?.(null);
     setSearchQuery("");
+    onChange?.(null);
+    inputRef.current?.focus();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    setIsOpen(true);
+    if (value === "") {
+      setSelectedCountry(null);
+      onChange?.(null);
+    }
+  };
+
+  const handleInputFocus = () => {
+    setIsOpen(true);
   };
 
   // Theme-based colors
@@ -128,78 +138,64 @@ export default function CountrySelect({
     >
       {/* Main Input */}
       <div
-        onClick={() => setIsOpen(!isOpen)}
-        className={`relative flex items-center gap-3 ${bgColor} ${textColor} border ${borderColor} rounded-xl px-4 py-3 cursor-pointer transition-all duration-200 ${
+        className={`relative flex items-center gap-3 ${bgColor} ${textColor} border ${borderColor} rounded-xl px-4 py-3 transition-all duration-200 ${
           isOpen ? "ring-2 ring-pink-500/50" : ""
         }`}
       >
-        {selectedCountry ? (
-          <>
-            <span className="text-2xl">{selectedCountry.flag}</span>
-            <span className="flex-1 text-sm font-medium">{selectedCountry.name}</span>
-            <button
-              onClick={handleClear}
-              className={`p-1 rounded-md ${hoverBg} transition-colors`}
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </>
-        ) : (
-          <>
-            <Search className="w-4 h-4 opacity-50" />
-            <span className={`flex-1 text-sm ${placeholderColor}`}>{placeholder}</span>
-            <ChevronDown
-              className={`w-4 h-4 opacity-50 transition-transform duration-200 ${
-                isOpen ? "rotate-180" : ""
-              }`}
-            />
-          </>
+        {selectedCountry && (
+          <span className="text-2xl">{selectedCountry.flag}</span>
+        )}
+        {!selectedCountry && (
+          <Search className="w-4 h-4 opacity-50" />
+        )}
+        <input
+          ref={inputRef}
+          type="text"
+          value={searchQuery}
+          onChange={handleInputChange}
+          onFocus={handleInputFocus}
+          placeholder={placeholder}
+          className={`flex-1 bg-transparent outline-none text-sm font-medium ${textColor} placeholder:${placeholderColor}`}
+        />
+        {selectedCountry && searchQuery && (
+          <button
+            onClick={handleClear}
+            className={`p-1 rounded-md ${hoverBg} transition-colors`}
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
+        {!selectedCountry && (
+          <ChevronDown
+            className={`w-4 h-4 opacity-50 transition-transform duration-200 ${
+              isOpen ? "rotate-180" : ""
+            }`}
+          />
         )}
       </div>
 
       {/* Dropdown */}
-      {isOpen && (
+      {isOpen && filteredCountries.length > 0 && (
         <div
           className={`absolute z-50 w-full mt-2 ${dropdownBg} border ${dropdownBorder} rounded-xl shadow-2xl overflow-hidden`}
         >
-          {/* Search Input */}
-          <div className={`p-3 border-b ${dropdownBorder}`}>
-            <div className={`relative flex items-center gap-2 ${bgColor} border ${borderColor} rounded-lg px-3 py-2`}>
-              <Search className="w-4 h-4 opacity-50" />
-              <input
-                ref={inputRef}
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search countries..."
-                className={`flex-1 bg-transparent outline-none text-sm ${textColor} placeholder:${placeholderColor}`}
-              />
-            </div>
-          </div>
-
           {/* Countries List */}
           <div className="max-h-64 overflow-y-auto">
-            {filteredCountries.length > 0 ? (
-              filteredCountries.map((country) => (
-                <button
-                  key={country.code}
-                  onClick={() => handleSelect(country)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
-                    selectedCountry?.code === country.code ? selectedBg : hoverBg
-                  }`}
-                >
-                  <span className="text-2xl">{country.flag}</span>
-                  <div className="flex-1">
-                    <div className={`text-sm font-medium ${textColor}`}>{country.name}</div>
-                    <div className={`text-xs ${placeholderColor}`}>{country.code}</div>
-                  </div>
-                </button>
-              ))
-            ) : (
-              <div className={`px-4 py-8 text-center ${placeholderColor} text-sm`}>
-                No countries found
-              </div>
-            )}
+            {filteredCountries.map((country) => (
+              <button
+                key={country.code}
+                onClick={() => handleSelect(country)}
+                className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
+                  selectedCountry?.code === country.code ? selectedBg : hoverBg
+                }`}
+              >
+                <span className="text-2xl">{country.flag}</span>
+                <div className="flex-1">
+                  <div className={`text-sm font-medium ${textColor}`}>{country.name}</div>
+                  <div className={`text-xs ${placeholderColor}`}>{country.code}</div>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
       )}
