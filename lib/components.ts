@@ -177,6 +177,110 @@ Two-layer construction — the base text renders in \`--shimmer-base\`. A \`::be
 Includes \`@media (prefers-reduced-motion: reduce)\` guard — the animation stops for users who have requested less motion at the OS level.`,
   },
   {
+    id: "ai-task-tracker",
+    name: "AI Task Tracker",
+    description: "Task list card that tracks AI agent progress with live completion state",
+    category: "AI Components",
+    date: "2026-09-29",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/AITaskTracker",
+    html: `"use client";
+
+import { useState } from "react";
+
+interface Task {
+  id: string;
+  label: string;
+  done: boolean;
+}
+
+interface AITaskTrackerProps {
+  title?: string;
+  tasks?: Task[];
+  theme?: "light" | "dark";
+  className?: string;
+  scale?: number;
+}
+
+export default function AITaskTracker({
+  title = "To-dos",
+  tasks: initialTasks = [],
+  theme = "light",
+  className = "",
+  scale = 1,
+}: AITaskTrackerProps) {
+  // See full implementation in component file
+}`,
+    css: `/* All styles via Tailwind — no separate CSS needed */`,
+    usage: `## Usage
+
+A task list card for showing what an AI agent is working through. Tasks can be toggled done/undone. The header icon fills green when all tasks are complete and the counter updates live.
+
+### Installation
+
+Copy the component to your project: \`components/ui/AITaskTracker.tsx\`
+
+### Basic Usage
+
+\`\`\`tsx
+import AITaskTracker from "@/components/ui/AITaskTracker";
+
+export default function MyPage() {
+  return (
+    <AITaskTracker />
+  );
+}
+\`\`\`
+
+### With Custom Tasks
+
+\`\`\`tsx
+<AITaskTracker
+  title="To-dos"
+  tasks={[
+    { id: "1", label: "Scaffold the project structure", done: true },
+    { id: "2", label: "Build the component registry", done: true },
+    { id: "3", label: "Implement entitlement gating", done: false },
+    { id: "4", label: "Wire up Stripe checkout", done: false },
+    { id: "5", label: "Polish the landing page", done: false },
+  ]}
+/>
+\`\`\`
+
+### Dark Theme
+
+\`\`\`tsx
+<AITaskTracker theme="dark" />
+\`\`\`
+
+### Props
+
+- \`title\` (string, optional): Card heading (default: "To-dos")
+- \`tasks\` (Task[], optional): Array of task objects with \`id\`, \`label\`, and \`done\`
+- \`theme\` ('light' | 'dark', optional): Color theme (default: 'light')
+- \`className\` (string, optional): Additional CSS classes
+- \`scale\` (number, optional): Scale multiplier (default: 1)
+
+### Task Object
+
+\`\`\`ts
+interface Task {
+  id: string;     // unique identifier
+  label: string;  // task description
+  done: boolean;  // completion state
+}
+\`\`\`
+
+### Features
+
+- Click any task to toggle done/undone
+- Header icon fills green when all tasks complete
+- Live X/Y progress counter
+- Strikethrough + muted color for completed tasks
+- Hover state on undone tasks hints the circle turns green
+- Full light and dark theme support`,
+  },
+  {
     id: "feedback-bar",
     name: "Feedback Bar",
     description: "Collect thumbs up / down feedback on AI responses",

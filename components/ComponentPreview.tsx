@@ -7,6 +7,7 @@ import ShimmerText from "@/components/ui/ShimmerText";
 import ThinkingStates from "@/components/ui/ThinkingStates";
 import ThinkingDotLoader from "@/components/ui/ThinkingDotLoader";
 import FeedbackBar from "@/components/ui/FeedbackBar";
+import AITaskTracker from "@/components/ui/AITaskTracker";
 import StreamingText from "@/components/ui/StreamingText";
 import MusicPlayer from "@/components/ui/MusicPlayer";
 import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
@@ -29,6 +30,14 @@ export function ComponentPreview({ component, showThemeToggle = false }: Compone
           text="Planning next moves"
           theme={previewTheme}
         />
+      );
+    }
+
+    if (component.id === "ai-task-tracker") {
+      return (
+        <div className="w-full max-w-sm">
+          <AITaskTracker theme={previewTheme} />
+        </div>
       );
     }
 

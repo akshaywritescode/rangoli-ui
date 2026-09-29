@@ -58,7 +58,7 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                     <h3 className="text-lg font-semibold mb-2 text-white">Create the component file</h3>
                     <p className="text-zinc-400">
                       Copy the code from the Code tab and save it as <code className="px-2 py-1 bg-black/50 rounded text-pink-400 font-jetbrains-mono text-sm">
-                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : component.id === 'credit-card' ? 'components/ui/CreditCard.tsx' : component.id === 'inline-confirm' ? 'components/ui/InlineConfirmBtn.tsx' : component.id === 'feedback-bar' ? 'components/ui/FeedbackBar.tsx' : component.id === 'shimmer-text' ? 'components/ui/ShimmerText.tsx' : component.id === 'thinking-dot-loader' ? 'components/ui/ThinkingDotLoader.tsx' : component.id === 'thinking-states' ? 'components/ui/ThinkingStates.tsx' : component.id === 'streaming-text' ? 'components/ui/StreamingText.tsx' : 'components/ui/MusicPlayer.tsx'}
+                        {component.id === 'animated-qr-code' ? 'components/ui/AnimatedQRCode.tsx' : component.id === 'event-ticket' ? 'components/ui/EventTicket.tsx' : component.id === 'credit-card' ? 'components/ui/CreditCard.tsx' : component.id === 'inline-confirm' ? 'components/ui/InlineConfirmBtn.tsx' : component.id === 'feedback-bar' ? 'components/ui/FeedbackBar.tsx' : component.id === 'ai-task-tracker' ? 'components/ui/AITaskTracker.tsx' : component.id === 'shimmer-text' ? 'components/ui/ShimmerText.tsx' : component.id === 'thinking-dot-loader' ? 'components/ui/ThinkingDotLoader.tsx' : component.id === 'thinking-states' ? 'components/ui/ThinkingStates.tsx' : component.id === 'streaming-text' ? 'components/ui/StreamingText.tsx' : 'components/ui/MusicPlayer.tsx'}
                       </code>
                     </p>
                   </div>
@@ -86,6 +86,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                           ? `import InlineConfirmBtn from "@/components/ui/InlineConfirmBtn";`
                           : component.id === 'feedback-bar'
                           ? `import FeedbackBar from "@/components/ui/FeedbackBar";`
+                          : component.id === 'ai-task-tracker'
+                          ? `import AITaskTracker from "@/components/ui/AITaskTracker";`
                           : component.id === 'shimmer-text'
                           ? `import ShimmerText from "@/components/ui/ShimmerText";`
                           : component.id === 'thinking-dot-loader'
@@ -170,6 +172,17 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
   onNotHelpful={() => console.log("not helpful")}
   onClose={() => console.log("closed")}
 />`
+  : component.id === 'ai-task-tracker'
+  ? `<AITaskTracker
+  title="To-dos"
+  tasks={[
+    { id: "1", label: "Scaffold the project structure", done: true },
+    { id: "2", label: "Build the component registry", done: true },
+    { id: "3", label: "Implement entitlement gating", done: false },
+    { id: "4", label: "Wire up Stripe checkout", done: false },
+    { id: "5", label: "Polish the landing page", done: false },
+  ]}
+/>`
   : `<MusicPlayer 
   coverImage="/path/to/cover.jpg" 
   audioSrc="/path/to/audio.mp3"
@@ -201,6 +214,8 @@ export function ComponentTabs({ component }: ComponentTabsProps) {
                         : component.id === 'inline-confirm'
                         ? 'Install lucide-react: npm i lucide-react'
                         : component.id === 'feedback-bar'
+                        ? 'Install lucide-react: npm i lucide-react'
+                        : component.id === 'ai-task-tracker'
                         ? 'Install lucide-react: npm i lucide-react'
                         : 'No additional assets required - default play/pause icons are included. Optionally pass custom icons via props (Lucide React, images, etc.)'
                       }
