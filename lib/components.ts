@@ -177,6 +177,125 @@ Two-layer construction — the base text renders in \`--shimmer-base\`. A \`::be
 Includes \`@media (prefers-reduced-motion: reduce)\` guard — the animation stops for users who have requested less motion at the OS level.`,
   },
   {
+    id: "thinking-states",
+    name: "Thinking States",
+    description: "AI status line that shimmers while thinking and swaps states with blur transitions",
+    category: "AI Components",
+    date: "2026-09-29",
+    hasReactComponent: true,
+    reactComponentPath: "@/components/ui/ThinkingStates",
+    html: `"use client";
+
+import { useState, useEffect, useRef } from "react";
+
+interface ThinkingStatesProps {
+  states?: string[];
+  hold?: number;
+  swap?: number;
+  gap?: number;
+  distance?: number;
+  blur?: number;
+  theme?: "light" | "dark";
+  className?: string;
+  scale?: number;
+}
+
+export default function ThinkingStates({
+  states = ["Setting up a workplace", "Running a command", "Browsing files"],
+  hold = 2000,
+  swap = 150,
+  gap = 50,
+  distance = 8,
+  blur = 2,
+  theme = "dark",
+  className = "",
+  scale = 1,
+}: ThinkingStatesProps) {
+  // See full implementation in component file
+}`,
+    css: `/* Shimmer while the state holds */
+.t-think-text { 
+  position: absolute; top: 0; left: 0; right: 0;
+  color: var(--think-base);
+  transition: transform var(--think-swap) ease-in-out,
+              filter   var(--think-swap) ease-in-out,
+              opacity  var(--think-swap) ease-in-out;
+}
+/* Exit: float up and blur out */
+.t-think-text.is-exit {
+  transform: translateY(calc(var(--think-distance) * -1));
+  filter: blur(var(--think-blur));
+  opacity: 0;
+}
+/* Enter: start from below, then release */
+.t-think-text.is-enter-start {
+  transition: none;
+  transform: translateY(var(--think-distance));
+  filter: blur(var(--think-blur));
+  opacity: 0;
+}
+@keyframes t-think-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-think-text { transition: none !important; }
+}`,
+    usage: `## Usage
+
+An AI status line that narrates what the agent is doing — shimmers while a state holds, then swaps to the next state with a blur transition. The old line exits upward while the new one rises in from below.
+
+### Installation
+
+Copy the component to your project: \`components/ui/ThinkingStates.tsx\`
+
+### Basic Usage
+
+\`\`\`tsx
+import ThinkingStates from "@/components/ui/ThinkingStates";
+
+export default function MyPage() {
+  return (
+    <ThinkingStates />
+  );
+}
+\`\`\`
+
+### Custom States
+
+\`\`\`tsx
+<ThinkingStates
+  states={[
+    "Analysing your codebase",
+    "Writing the component",
+    "Running tests",
+    "Almost done",
+  ]}
+  hold={2500}
+/>
+\`\`\`
+
+### Props
+
+- \`states\` (string[], optional): Array of status strings to cycle through
+- \`hold\` (number, optional): Time in ms each state is shown (default: 2000)
+- \`swap\` (number, optional): Duration of the swap animation in ms (default: 150)
+- \`gap\` (number, optional): Delay between exit and enter in ms (default: 50)
+- \`distance\` (number, optional): Vertical travel distance in px (default: 8)
+- \`blur\` (number, optional): Blur amount during transition in px (default: 2)
+- \`theme\` ('light' | 'dark', optional): Color theme (default: 'dark')
+- \`className\` (string, optional): Additional CSS classes
+- \`scale\` (number, optional): Scale multiplier (default: 1)
+
+### How it works
+
+A hidden sizer span holds the longest state to keep the container width stable. The visible text shimmers continuously. On each swap, the outgoing line exits upward with blur while the incoming line rises in from below — both animate simultaneously so the swap costs one \`--think-swap\`, not two.
+
+### Accessibility
+
+Includes \`@media (prefers-reduced-motion: reduce)\` guard and \`role="status"\` on the live text.`,
+  },
+  {
     id: "credit-card",
     name: "Credit Card",
     description: "3D flip credit/debit card with front and back",

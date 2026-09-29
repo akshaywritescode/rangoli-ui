@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { Component } from "@/lib/components";
 import ShimmerText from "@/components/ui/ShimmerText";
+import ThinkingStates from "@/components/ui/ThinkingStates";
 import MusicPlayer from "@/components/ui/MusicPlayer";
 import AnimatedQRCode from "@/components/ui/AnimatedQRCode";
 import EventTicket from "@/components/ui/EventTicket";
@@ -23,6 +24,14 @@ export function ComponentPreview({ component, showThemeToggle = false }: Compone
       return (
         <ShimmerText
           text="Planning next moves"
+          theme={previewTheme}
+        />
+      );
+    }
+
+    if (component.id === "thinking-states") {
+      return (
+        <ThinkingStates
           theme={previewTheme}
         />
       );
