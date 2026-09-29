@@ -14,7 +14,7 @@ interface ThinkingStatesProps {
   scale?: number;
 }
 
-type SwapPhase = "idle" | "exit" | "enter-prime" | "enter-run";
+type Phase = "idle" | "exit" | "enter-prime" | "enter-run";
 
 export default function ThinkingStates({
   states = ["Setting up a workplace", "Running a command", "Browsing files"],
@@ -27,112 +27,103 @@ export default function ThinkingStates({
   className = "",
   scale = 1,
 }: ThinkingStatesProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState<number | null>(null);
-  const [phase, setPhase] = useState<SwapPhase>("idle");
-  const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const swapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [curIdx, setCurIdx] = useState(0);
+  const [nxtIdx, setNxtIdx] = useState<number | null>(null);
+  const [phase, setPhase] = useState<Phase>("idle");
+
+  // Stable refs so timers never close over stale values
+  const curIdxRef = useRef(0);
+  const statesRef = useRef(states);
+  statesRef.current = states;
 
   const base = theme === "dark" ? "#7c7c7c" : "#9ca3af";
   const highlight = theme === "dark" ? "#ffffff" : "#111111";
   const longestState = states.reduce((a, b) => (a.length > b.length ? a : b), "");
 
-  // Start the hold timer to trigger next swap
-  const scheduleNext = () => {
-    holdTimerRef.current = setTimeout(() => {
-      setNextIndex((prev) => {
-        const next = (currentIndex + 1) % states.length;
-        return next;
-      });
-      setPhase("exit");
-    }, hold);
-  };
-
-  // Kick off on mount and whenever currentIndex settles back to idle
+  // Single loop — runs once, self-cleans
   useEffect(() => {
-    if (phase === "idle") {
-      scheduleNext();
-    }
-    return () => {
-      if (holdTimerRef.current) clearTimeout(holdTimerRef.current);
+    let t: ReturnType<typeof setTimeout>;
+
+    const kick = () => {
+      // 1. Wait hold ms, then start exit
+      t = setTimeout(() => {
+        const next = (curIdxRef.current + 1) % statesRef.current.length;
+        setNxtIdx(next);
+        setPhase("exit");
+
+        // 2. After gap ms, mount incoming span in its "primed" (offset) position
+        t = setTimeout(() => {
+          setPhase("enter-prime");
+          // useLayoutEffect will flip this to "enter-run" after paint
+        }, gap);
+      }, hold);
     };
-  }, [phase, currentIndex]);
 
-  // When phase hits "exit", wait gap ms then move to "enter-prime"
-  // enter-prime renders the incoming span off-screen (no transition)
+    kick();
+    return () => clearTimeout(t);
+    // intentionally empty deps — runs once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // After enter-prime paints, force reflow then release the animation
+  useLayoutEffect(() => {
+    if (phase !== "enter-prime") return;
+    void document.body.offsetHeight; // flush layout
+    setPhase("enter-run");
+  }, [phase]);
+
+  // After enter-run animation finishes, commit and loop
   useEffect(() => {
-    if (phase === "exit") {
-      swapTimerRef.current = setTimeout(() => {
+    if (phase !== "enter-run") return;
+    const t = setTimeout(() => {
+      if (nxtIdx === null) return;
+      curIdxRef.current = nxtIdx;
+      setCurIdx(nxtIdx);
+      setNxtIdx(null);
+      setPhase("idle");
+    }, swap);
+    return () => clearTimeout(t);
+  }, [phase, nxtIdx, swap]);
+
+  // Restart hold timer each time we return to idle
+  useEffect(() => {
+    if (phase !== "idle") return;
+    const t = setTimeout(() => {
+      const next = (curIdxRef.current + 1) % statesRef.current.length;
+      setNxtIdx(next);
+      setPhase("exit");
+
+      setTimeout(() => {
         setPhase("enter-prime");
       }, gap);
-    }
-    return () => { if (swapTimerRef.current) clearTimeout(swapTimerRef.current); };
-  }, [phase]);
-
-  // After "enter-prime" paints, force a reflow then release to "enter-run"
-  useLayoutEffect(() => {
-    if (phase === "enter-prime") {
-      // Reading offsetHeight forces the browser to flush layout,
-      // so the next setState sees the resting position before animating.
-      void document.body.offsetHeight;
-      setPhase("enter-run");
-    }
-  }, [phase]);
-
-  // After the swap animation finishes, commit the new state
-  useEffect(() => {
-    if (phase === "enter-run") {
-      swapTimerRef.current = setTimeout(() => {
-        if (nextIndex !== null) setCurrentIndex(nextIndex);
-        setNextIndex(null);
-        setPhase("idle");
-      }, swap);
-    }
-    return () => { if (swapTimerRef.current) clearTimeout(swapTimerRef.current); };
-  }, [phase]);
+    }, hold);
+    return () => clearTimeout(t);
+  }, [phase, hold, gap]);
 
   const transition = `transform ${swap}ms ease-in-out, filter ${swap}ms ease-in-out, opacity ${swap}ms ease-in-out`;
 
-  // Styles for the outgoing (current) span
-  const currentStyle: React.CSSProperties =
+  const curStyle: React.CSSProperties =
     phase === "exit" || phase === "enter-prime" || phase === "enter-run"
-      ? {
-          transform: `translateY(-${distance}px)`,
-          filter: `blur(${blur}px)`,
-          opacity: 0,
-          transition,
-        }
-      : {
-          transform: "translateY(0)",
-          filter: "blur(0)",
-          opacity: 1,
-          transition,
-        };
+      ? { transform: `translateY(-${distance}px)`, filter: `blur(${blur}px)`, opacity: 0, transition }
+      : { transform: "translateY(0)", filter: "blur(0px)", opacity: 1, transition };
 
-  // Styles for the incoming span
-  const nextStylePrime: React.CSSProperties = {
-    transform: `translateY(${distance}px)`,
-    filter: `blur(${blur}px)`,
-    opacity: 0,
-    transition: "none", // no transition while priming position
-  };
-
-  const nextStyleRun: React.CSSProperties = {
-    transform: "translateY(0)",
-    filter: "blur(0)",
-    opacity: 1,
-    transition,
-  };
+  const nxtStyle: React.CSSProperties =
+    phase === "enter-run"
+      ? { transform: "translateY(0)", filter: "blur(0px)", opacity: 1, transition }
+      : { transform: `translateY(${distance}px)`, filter: `blur(${blur}px)`, opacity: 0, transition: "none" };
 
   const spanBase: React.CSSProperties = {
     position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
+    top: 0, left: 0, right: 0,
     display: "block",
     color: base,
     whiteSpace: "nowrap",
   };
+
+  const shimmerVars = {
+    "--thi-hl": highlight,
+    "--thi-dur": `${hold}ms`,
+  } as React.CSSProperties;
 
   return (
     <span
@@ -141,8 +132,7 @@ export default function ThinkingStates({
     >
       <style>{`
         .t-think-shimmer {
-          position: absolute;
-          inset: 0;
+          position: absolute; inset: 0;
           pointer-events: none;
           background-image: linear-gradient(
             90deg,
@@ -156,9 +146,9 @@ export default function ThinkingStates({
           background-clip: text;
           color: transparent;
           -webkit-text-fill-color: transparent;
-          animation: t-think-shimmer-kf var(--thi-dur) linear infinite;
+          animation: t-think-kf var(--thi-dur) linear infinite;
         }
-        @keyframes t-think-shimmer-kf {
+        @keyframes t-think-kf {
           0%   { background-position: 100% 0; }
           100% { background-position: 0% 0; }
         }
@@ -167,42 +157,25 @@ export default function ThinkingStates({
         }
       `}</style>
 
-      {/* Invisible sizer — keeps the container width stable */}
+      {/* Invisible sizer keeps container width stable */}
       <span style={{ display: "block", visibility: "hidden", whiteSpace: "nowrap" }}>
         {longestState}
       </span>
 
-      {/* Current (outgoing) text */}
-      <span
-        role="status"
-        aria-live="polite"
-        style={{ ...spanBase, ...currentStyle }}
-      >
-        {states[currentIndex]}
-        <span
-          className="t-think-shimmer"
-          aria-hidden="true"
-          style={{ "--thi-hl": highlight, "--thi-dur": `${hold}ms` } as React.CSSProperties}
-        >
-          {states[currentIndex]}
+      {/* Outgoing text */}
+      <span role="status" aria-live="polite" style={{ ...spanBase, ...curStyle }}>
+        {states[curIdx]}
+        <span className="t-think-shimmer" aria-hidden="true" style={shimmerVars}>
+          {states[curIdx]}
         </span>
       </span>
 
-      {/* Incoming text — only rendered during swap */}
-      {nextIndex !== null && (
-        <span
-          style={{
-            ...spanBase,
-            ...(phase === "enter-run" ? nextStyleRun : nextStylePrime),
-          }}
-        >
-          {states[nextIndex]}
-          <span
-            className="t-think-shimmer"
-            aria-hidden="true"
-            style={{ "--thi-hl": highlight, "--thi-dur": `${hold}ms` } as React.CSSProperties}
-          >
-            {states[nextIndex]}
+      {/* Incoming text — only during swap */}
+      {nxtIdx !== null && (
+        <span style={{ ...spanBase, ...nxtStyle }}>
+          {states[nxtIdx]}
+          <span className="t-think-shimmer" aria-hidden="true" style={shimmerVars}>
+            {states[nxtIdx]}
           </span>
         </span>
       )}
